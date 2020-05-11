@@ -1,0 +1,143 @@
+<div class="input-group mb-2 mt-3">
+
+    <form class="input-group mb-2" ic-post-to="{{ data.freesearch.url }}"  ic-target="#content_wrapper" ic-trigger-on="default" ic-push-url="true">
+        <input type="text"  name="freesearch" class="form-control" placeholder="Search...">
+        <div class="input-group-append">
+            <button class="btn btn-light" type="submit"><i class="fa fa-search"></i></button>
+        </div>
+    </form>
+
+
+</div>
+<div id="types" class="card text-white bg-dark mb-1">
+    <a href="#type_list" data-toggle="collapse" class="entry-link"><div class="card-header bg-dare-card-header">
+            <i class="fas fa-layer-group"></i> Type of Media <span class="badge badge-danger bg-dare">{{ data.facets.types|length }}</span>
+        </div></a>
+    <div class="card-body collapse bg-dare-card-body no-p-tb dare-scrollbar" id="type_list" style="overflow-y: scroll; max-height: 15vh">
+        <ul class="list-group">
+            {% for t in data.facets.types %}
+                <a href="{{ t.url }}&page={{ data.page.current }}" ic-get-from="{{ t.url }}" ic-target="#content_wrapper" ic-push-url="true" class="entry-link">
+                    <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center{% if t.selected == 1 %} active{% endif %} pt-1 pb-1"><small>{% if t.id == 1%}Book{% endif %}{% if t.id == 2%}Book Series{% endif %}{% if t.id == 3%}Article{% endif %}{% if t.id == 4%}Edited Book{% endif %}{% if t.id == 5%}Book Series{% endif %}{% if t.id == 6%}Online Catalog{% endif %}{% if t.id == 7%}Old Catalog{% endif %} <span class="badge badge-secondary badge-pill">{{ t.count }}</span></small></li>
+                </a>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
+
+<div id="categories" class="card text-white bg-dark mb-1">
+    <a href="#categories_list" data-toggle="collapse" class="entry-link"><div class="card-header bg-dare-card-header">
+            <i class="fas fa-tag"></i> Category <span class="badge badge-danger bg-dare">{{ data.facets.categories|length }}</span>
+        </div></a>
+    <div class="card-body collapse bg-dare-card-body no-p-tb dare-scrollbar" id="categories_list" style="overflow-y: scroll; max-height: 15vh">
+        <ul class="list-group">
+            {% for c in data.facets.categories %}
+                <a href="{{ c.url }}" ic-get-from="{{ c.url }}" ic-target="#content_wrapper" ic-push-url="true" class="entry-link">
+                    <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center{% if c.selected == 1 %} active{% endif %} pt-1 pb-1"><small>{{ c.id }} <span class="badge badge-secondary badge-pill">{{ c.count }}</span></small></li>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div id="works" class="card text-white bg-dark mb-1">
+    <a href="#works_list" data-toggle="collapse" class="entry-link"><div class="card-header bg-dare-card-header">
+            <i class="fa fa-fw fa-book"></i> Work <span class="badge badge-danger bg-dare">{{ data.facets.works|length }}</span>
+        </div></a>
+    <div class="card-body collapse bg-dare-card-body no-p-tb dare-scrollbar" id="works_list" style="overflow-y: scroll; max-height: 15vh">
+        <ul class="list-group">
+            {% for w in data.facets.works %}
+                <a href="{{ w.url }}"  ic-get-from="{{ w.url }}" ic-target="#content_wrapper" ic-push-url="true" class="entry-link">
+                    <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center{% if w.selected == 1 %} active{% endif %} pt-1 pb-1"><small>{{ w.id }} <span class="badge badge-secondary badge-pill">{{ w.count }}</span></small></li>
+                </a>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
+
+<div id="authors" class="card text-white bg-dark mb-1">
+    <a href="#authors_list" data-toggle="collapse" class="entry-link"><div class="card-header bg-dare-card-header">
+            <i class="fas fa-user-friends"></i> Author <span class="badge badge-danger bg-dare">{{ data.facets.authors|length }}</span>
+        </div></a>
+    <div class="card-body collapse bg-dare-card-body no-p-tb dare-scrollbar" id="authors_list" style="overflow-y: scroll; max-height: 15vh">
+        <ul class="list-group">
+            {% for a in data.facets.authors %}
+                <a href="{{ a.url }}" ic-get-from="{{ a.url }}" ic-target="#content_wrapper" ic-push-url="true" class="entry-link">
+                    <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center{% if a.selected == 1 %} active{% endif %} pt-1 pb-1"><small>{{ a.id }} <span class="badge badge-secondary badge-pill">{{ a.count }}</span></small></li>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div id="dates" class="card text-white bg-dark mb-1">
+    <a href="#date_list" data-toggle="collapse" class="entry-link"><div class="card-header bg-dare-card-header">
+            <i class="fas fa-calendar-alt"></i> Date <span class="badge badge-danger bg-dare">{{ data.facets.dates|length }}</span>
+        </div></a>
+    <div class="card-body collapse bg-dare-card-body no-p-tb dare-scrollbar" id="date_list" style="overflow-y: scroll; max-height: 15vh">
+        <ul class="list-group">
+            {% for d in data.facets.dates %}
+                {% if d.count != 0 %}
+                <a href="{{ d.url }}" ic-get-from="{{ d.url }}" ic-target="#content_wrapper" ic-push-url="true" class="entry-link">
+                    <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center{% if d.selected == 1 %} active{% endif %} pt-1 pb-1"><small>{{ d.id }} <span class="badge badge-secondary badge-pill">{{ d.count }}</span></small></li>
+                </a>
+                {% endif %}
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
+<div class="card bg-transparent">
+    <div class="card-body">
+        {% if data.selected.types is not empty %}
+            <h5>Type of Media</h5>
+            <div class="d-flex flex-wrap mb-2">
+                {% for t in data.facets.types %}
+                    {% if t.selected == 1 %}
+                        <a href="{{ t.url }}" ic-get-from="{{ t.url }}" ic-push-url="true" ic-target="#content_wrapper"><button type="button" class="btn btn-outline-dare btn-sm">{% if t.id == 1%}"Book"{% endif %}{% if t.id == 2%}"Book Series"{% endif %}{% if t.id == 3%}"Article"{% endif %}{% if t.id == 4%}"Edited Book"{% endif %}{% if t.id == 5%}"Book Series"{% endif %}{% if t.id == 6%}"Online Catalog"{% endif %}{% if t.id == 7%}"Old Catalog"{% endif %} <i class="far fa-times-circle text-dare"></i></button></a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if data.selected.categories is not empty %}
+            <h5>Category</h5>
+            <div class="d-flex flex-wrap mb-2">
+                {% for c in data.facets.categories %}
+                    {% if c.selected == 1 %}
+                        <a href="{{ c.url }}" ic-get-from="{{ c.url }}" ic-push-url="true" ic-target="#content_wrapper"><button type="button" class="btn btn-outline-dare btn-sm">"{{ c.id }}" <i class="far fa-times-circle text-dare"></i></button></a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if data.selected.works is not empty %}
+            <h5>Work</h5>
+            <div class="d-flex flex-wrap mb-2">
+                {% for w in data.facets.works %}
+                    {% if w.selected == 1 %}
+                        <a href="{{ w.url }}" ic-get-from="{{ w.url }}" ic-push-url="true" ic-target="#content_wrapper"><button type="button" class="btn btn-outline-dare btn-sm">"{{ w.id }}" <i class="far fa-times-circle text-dare"></i></button></a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if data.selected.authors is not empty %}
+            <h5>Author</h5>
+            <div class="d-flex flex-wrap mb-2">
+                {% for a in data.facets.authors %}
+                    {% if a.selected == 1 %}
+                        <a href="{{ a.url }}" ic-get-from="{{ a.url }}" ic-push-url="true" ic-target="#content_wrapper"><button type="button" class="btn btn-outline-dare btn-sm">"{{ a.id }}" <i class="far fa-times-circle text-dare"></i></button></a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if data.selected.freesearch is not empty %}
+            <h5>Free Search</h5>
+            {% for f in data.freesearch.terms %}
+            <div class="d-flex flex-wrap mb-2">
+               <a href="{{ f.url }}" ic-get-from="{{ f.url }}" ic-push-url="true" ic-target="#content_wrapper"><button type="button" class="btn btn-outline-dare btn-sm">"{{ f.term }}" <i class="far fa-times-circle text-dare"></i></button></a>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</div>

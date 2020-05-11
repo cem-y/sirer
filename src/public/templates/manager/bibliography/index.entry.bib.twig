@@ -1,0 +1,31 @@
+{% if data.is_inactive!=1 %}
+<small>{% if data.index_status.all == 1 %}<span class="text-center text-success">Database and Index identical</span>{% else %}<span class="text-center text-danger">Database and Index not identical</span>{% endif %}</small>
+<ul class="list-group">
+    <li class="list-group-item no-p-tb"><small>Title: <span class="{% if data.index_status.title.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.title.msg %}{{ data.index_status.title.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+    <li class="list-group-item no-p-tb"><small>Date: <span class="{% if data.index_status.date.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.date.msg %}{{ data.index_status.date.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+    <li class="list-group-item no-p-tb"><small>Type: <span class="{% if data.index_status.type.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.type.msg %}{{ data.index_status.type.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+    {% if data.index_status.type.status == 1 %}
+        <hr class="bright-dare">
+        {% if data.type == 1 or data.type == 4 %}
+            <li class="list-group-item no-p-tb"><small>Publication Place: <span class="{% if data.index_status.pubplace.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.pubplace.msg %}{{ data.index_status.pubplace.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+            <li class="list-group-item no-p-tb"><small>Publisher: <span class="{% if data.index_status.publisher.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.publisher.msg %}{{ data.index_status.publisher.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+            <li class="list-group-item no-p-tb"><small>Series: <span class="{% if data.index_status.series.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.series.msg %}{{ data.index_status.series.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+            <li class="list-group-item no-p-tb"><small>Volume: <span class="{% if data.index_status.volume.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.volume.msg %}{{ data.index_status.volume.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+            <li class="list-group-item no-p-tb"><small>Edition No.: <span class="{% if data.index_status.edition_no.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.edition_no.msg %}{{ data.index_status.edition_no.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+        {% endif %}
+        {% if data.type == 2 %}
+            <li class="list-group-item no-p-tb"><small>Section of: <span class="{% if data.index_status.section_of.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.section_of.msg %}{{ data.index_status.section_of.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+            <li class="list-group-item no-p-tb"><small>Pages: <span class="{% if data.index_status.pages.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.pages.msg %}{{ data.index_status.pages.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+        {% endif %}
+        {% if data.type == 3 %}
+            <li class="list-group-item no-p-tb"><small>Journal: <span class="{% if data.index_status.journal_name.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.journal_name.msg %}{{ data.index_status.journal_name.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+            <li class="list-group-item no-p-tb"><small>Volume: <span class="{% if data.index_status.volume.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.volume.msg %}{{ data.index_status.volume.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+            <li class="list-group-item no-p-tb"><small>Issue: <span class="{% if data.index_status.issue.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.issue.msg %}{{ data.index_status.issue.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+            <li class="list-group-item no-p-tb"><small>Pages: <span class="{% if data.index_status.pages.status == 1 %}text-success{% else %}text-danger{% endif %}">{% if data.index_status.pages.msg %}{{ data.index_status.pages.msg }}{% else %}<span class="font-italic">null</span>{% endif %}</span></small></li>
+        {% endif %}
+
+    {% endif %}
+</ul>
+{% else %}
+    <small><span class="text-center text-secondary">No index found because status is "inactive"</span></small>
+{% endif %}

@@ -1,0 +1,41 @@
+<div class="flex-row" xmlns="http://www.w3.org/1999/html">
+    {% for cat in data.categories %}
+        <button type="button" class="btn btn-sm btn-outline-primary"><a class="entry-link"  ic-delete-from="{{ webInfo.baseurl }}manager/bibliography/{{ data.id }}/category/{{ cat.id }}" ic-target="#cat_wrapper">{{ cat.category_name }}  <i class="far fa-times-circle"></i></a></button>
+    {%  endfor %}
+    <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="#" data-toggle="modal" data-target="#catModal"><i class="fas fa-plus-square"></i></a></button>
+</div>
+
+<div class="modal fade" id="catModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <form id="addCategory" method="post" ic-post-to="{{ webInfo.baseurl }}manager/bibliography/{{ data.id }}/category" ic-target="#cat_wrapper">
+                        <select name="cat_id" class="custom-select">
+                            {% for category in data.all_categories%}
+                                <option value="{{ category.id }}">{{ category.category_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                <script>
+                    $("#cat_wrapper").ready(function(){
+                        /*
+                        We need the function for removing the bs4-backdrop from modal
+                         */
+                        $(".modal-backdrop").remove();
+                    })
+                </script>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="addCategory" class="btn btn-primary">Add Category</button>
+                <a href="#"><button type="submit" form="addCategory" class="btn btn-warning">Create Category</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+

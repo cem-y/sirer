@@ -1,0 +1,263 @@
+{% include 'manager/mgr.head.twig' %}
+<body style="background-image: url('{{ webInfo.baseurl }}assets/img/dare_background.jpg'); background-size: cover; background-attachment: fixed; font-family: 'Source Sans Pro';">
+{%  include 'manager/mgr.topnav.twig' %}
+
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-center mt-5">
+        <div class="col-sm-9 ml-5 mt-5 ">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <button class="small" data-toggle="collapse" data-target="#admin"><i class="fas fa-code"></i></button>
+                        </div>
+                        <div class="col-sm-10">
+                            <p class="lead text-center">{{ data.title }} <span class="badge badge-danger">{{ data.id }}</span></p>
+                        </div>
+                    </div>
+                    <div id="admin" class="collapse">
+                        <kbd class="small">{{ data|json_encode }}</kbd>
+                    </div>
+                </div>
+                <div class="container-fluid" >
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="card-body" >
+                                <div class="card mb-3">
+                                    <div class="card-header">Categories</div>
+                                    <div id="cat_wrapper" class="card-body">
+                                        {% include 'manager/bibliography/cat.entry.bib.twig' %}
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">Persons</div>
+                                    <div id="person_wrapper" class="card-body">
+                                        {% include 'manager/bibliography/persons.entry.bib.twig' %}
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card-body">
+                                <form method="post">
+                                    <input type="hidden" name="_METHOD" value="PUT">
+                                    <fieldset>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Title</span>
+                                            </div>
+                                            <input id="title" type="text" class="form-control" name="title" placeholder="title" value="{{ data.title }}" required>
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Transcription</span>
+                                            </div>
+                                            <input id="title_transcript" type="text" class="form-control" name="title_transcript" value="{{ data.title_transcript }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Translation</span>
+                                            </div>
+                                            <input id="title_translation" type="text" class="form-control" name="title_translation" value="{{ data.title_translation }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Short Title</span>
+                                            </div>
+                                            <input id="short_title" type="text" class="form-control" name="short_title" value="{{ data.short_title }}">
+                                        </div>
+                                    </fieldset>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Abstract</span>
+                                        </div>
+                                        <textarea id="abstract" class="form-control" name="abstract" placeholder="enter a short abstract of the entry">{{ data.abstract }}</textarea>
+                                    </div>
+                                    <fieldset>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Language</span>
+                                            </div>
+                                            <input type="text"  id="language" class="form-control" name="language" aria-describedby="languageHelp" value="{{ data.language }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Date</span>
+                                            </div>
+                                            <input type="text"  id="date" class="form-control" name="date" aria-describedby="dateHelp" value="{{ data.date }}">
+                                        </div>
+                                        <hr class="bright-dare">
+
+
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Entry Type</span>
+                                            </div>
+                                            <select id="entry_type" name="entry_type" class="form-control custom-select" aria-describedby="entry_typeHelp">
+                                                {% if data.entry_type == "reference" %}
+                                                    <option value="reference" selected>Reference</option>
+                                                {% else %}
+                                                    <option value="reference">Reference</option>
+                                                {% endif %}
+                                                {% if data.entry_type == "bibliography" %}
+                                                    <option value="bibliography" selected>Bibliography</option>
+                                                {% else %}
+                                                    <option value="bibliography">Bibliography</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                        <div class="input-group  input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Type</span>
+                                            </div>
+                                            <select id="type" name="type" class="form-control custom-select" aria-describedby="typeHelp">
+                                                {% if data.type == 1 %}
+                                                    <option value="1" selected>Monograph</option>
+                                                {% else %}
+                                                    <option value="1">Monograph</option>
+                                                {% endif %}
+                                                {% if data.type == 2 %}
+                                                    <option value="2" selected>Book Section</option>
+                                                {% else %}
+                                                    <option value="2">Book Section</option>
+                                                {% endif %}
+                                                {% if data.type == 3 %}
+                                                    <option value="3" selected>Article</option>
+                                                {% else %}
+                                                    <option value="3">Article</option>
+                                                {% endif %}
+                                                {% if data.type == 4 %}
+                                                    <option value="4" selected>Edited Book</option>
+                                                {% else %}
+                                                    <option value="4">Edited Book</option>
+                                                {% endif %}
+                                                {% if data.type == 5 %}
+                                                    <option value="5" selected>Book Series</option>
+                                                {% else %}
+                                                    <option value="5">Book Series</option>
+                                                {% endif %}
+                                                {% if data.type == 6 %}
+                                                    <option value="6" selected>Online Catalog</option>
+                                                {% else %}
+                                                    <option value="6">Online Catalog</option>
+                                                {% endif %}
+                                                {% if data.type == 7 %}
+                                                    <option value="7" selected>old catalog</option>
+                                                {% else %}
+                                                    <option value="7">old catalog</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                    <div class="input-group  input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Status</span>
+                                        </div>
+                                        <select id="is_inactive" name="is_inactive" class="form-control custom-select" aria-describedby="typeHelp">
+                                            {% if data.is_inactive == 1 %}
+                                                <option value="1" selected>Inactive <small>(Index will be deleted or not created)</small></option>
+                                            {% else %}
+                                                <option value="1">Inactive <small>(Index will be deleted or not created)</small></option>
+                                            {% endif %}
+                                            {% if data.is_inactive == 1 %}
+                                                <option value="0">Active <small>(Index exists or will be created)</small></option>
+                                            {% else %}
+                                                <option value="0" selected>Active <small>(Index exists or will be created)</small></option>
+                                            {% endif %}
+
+                                        </select>
+                                    </div>
+                                    {% if data.is_inactive != 1 %}
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="index" name="index">
+                                        <label class="custom-control-label font-italic" for="index"><strong>update</strong> or <strong>create</strong> index now and show on page</label>
+                                    </div>
+                                    {% endif %}
+
+                                    <input type="submit" class="btn btn-success btn-sm btn-block" value="SAVE CHANGES">
+                                </form>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="card-body">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        {% if data.type == 1 %}
+                                            Monograph
+                                        {% elseif data.type == 2 %}
+                                            Book Section
+                                        {% elseif data.type == 3 %}
+                                            Article
+                                        {% elseif data.type == 4 %}
+                                            Edited Book
+                                        {% elseif data.type == 5 %}
+                                            Book Series
+                                        {% elseif data.type == 6 %}
+                                            Online Catalog
+                                        {% elseif data.type == 7 %}
+                                            Old Catalog
+                                        {% else %}
+                                            No Type
+                                        {% endif %}
+                                    </div>
+                                    <div id="description_wrapper" class="card-body">
+                                        {% if data.type == 1 %}
+                                            {%  include 'manager/bibliography/book.entry.bib.twig' %}
+                                        {% elseif data.type == 2 %}
+                                            {%  include 'manager/bibliography/booksection.entry.bib.twig' %}
+                                        {% elseif data.type == 3 %}
+                                            {%  include 'manager/bibliography/article.entry.bib.twig' %}
+                                        {% elseif data.type == 4 %}
+                                            {%  include 'manager/bibliography/book.entry.bib.twig' %}
+                                        {% elseif data.type == 5 %}
+                                            <p class="font-italic">Entry Type has no further description</p>
+                                        {% elseif data.type == 6 %}
+                                            <p class="font-italic">Entry Type has no further description</p>
+                                        {% elseif data.type == 7 %}
+                                            <p class="font-italic">Entry Type has no further description</p>
+                                        {% else %}
+                                            <p class="font-italic">No Entry Type. no data</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        Index Status
+                                    </div>
+                                    <div class="card-body" id="index_wrapper">
+                                        {%  include 'manager/bibliography/index.entry.bib.twig' %}
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+{%  include 'viewer/footer.twig' %}
+</body>

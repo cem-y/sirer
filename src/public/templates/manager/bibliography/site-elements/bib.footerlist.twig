@@ -1,0 +1,27 @@
+<div class="card-footer" style="height: 250px; overflow-y: scroll">
+    <div class="table-responsive-sm">
+        <table class="table table-bordered  table-sm ">
+            <tbody>
+            {% for entry in bibEntries %}
+            <tr>
+                <td><small>{{ entry.title }} </small></td>
+                <td><small>{{ entry.date }}</small></td>
+                <td><small>
+                        {% if entry.type == 1 %}Book
+                        {% elseif entry.type == 2 %}Section
+                        {% elseif entry.type == 3 %}Article
+                        {% elseif entry.type == 4 %}Edition
+                        {% elseif entry.type == 5 %}Series
+                        {% else %}{{ entry.type }}
+                        {% endif %}
+                    </small></td>
+                <td><span class="badge badge-primary bg-dare">{{ entry.id }}</span></td>
+                <td><a class="text-warning" href="/bib/bib/{{ entry.id }}"><i class="fas fa-edit"></i></a></td>
+                {% else %}
+                    <td><a href="#CREATE-BIB"><button class="btn btn-outline-success">CREATE NEW ENTRY</button></a></td>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>

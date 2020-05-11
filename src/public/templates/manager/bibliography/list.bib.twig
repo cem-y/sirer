@@ -1,0 +1,121 @@
+{% include 'manager/mgr.head.twig' %}
+<body style="background-image: url('{{ webInfo.baseurl }}assets/img/dare_background.jpg'); background-size: cover; background-attachment: fixed; font-family: 'Source Sans Pro';">
+{%  include 'manager/mgr.topnav.twig' %}
+
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-center flex-column mt-5">
+
+        <div class="d-flex justify-content-center" >
+            <form>
+                <div class="input-group mb-3" style="min-width:80vw; max-width: 80vw">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Filter Results</span>
+                    </div>
+                    <input type="search" class="form-control" name="freetext" id="freetext" placeholder="..." ic-post-to="{{ webInfo.baseurl }}manager/bibliography" ic-trigger-on="keyup changed" ic-target="#table_wrapper" ic-trigger-delay="500ms">
+                    <div class="input-group-append">
+                        <a data-toggle="modal" data-target="#newEntry"><button class="btn btn-success" type="button">Add</button></a>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+
+        <div class="modal fade" id="newEntry" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-secondary" id="exampleModalLabel">Create a new entry</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addEntry" method="post" action="{{ webInfo.baseurl }}manager/bibliography/new">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Title</span>
+                                </div>
+                                <input id="title" type="text" class="form-control" name="title" placeholder="Please enter title" required>
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Entry Type</span>
+                                </div>
+                                <select id="entry_type" name="entry_type" class="form-control custom-select" aria-describedby="entry_typeHelp">
+                                        <option value="reference">Reference</option>
+                                        <option value="bibliography" selected>Bibliography</option>
+                                </select>
+                            </div>
+                            <div class="input-group  input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Type</span>
+                                </div>
+                                <select id="type" name="type" class="form-control custom-select" aria-describedby="typeHelp">
+                                    {% if data.type == 1 %}
+                                        <option value="1" selected>Monograph</option>
+                                    {% else %}
+                                        <option value="1">Monograph</option>
+                                    {% endif %}
+                                    {% if data.type == 2 %}
+                                        <option value="2" selected>Book Section</option>
+                                    {% else %}
+                                        <option value="2">Book Section</option>
+                                    {% endif %}
+                                    {% if data.type == 3 %}
+                                        <option value="3" selected>Article</option>
+                                    {% else %}
+                                        <option value="3">Article</option>
+                                    {% endif %}
+                                    {% if data.type == 4 %}
+                                        <option value="4" selected>Edited Book</option>
+                                    {% else %}
+                                        <option value="4">Edited Book</option>
+                                    {% endif %}
+                                    {% if data.type == 5 %}
+                                        <option value="5" selected>Book Series</option>
+                                    {% else %}
+                                        <option value="5">Book Series</option>
+                                    {% endif %}
+                                    {% if data.type == 6 %}
+                                        <option value="6" selected>Online Catalog</option>
+                                    {% else %}
+                                        <option value="6">Online Catalog</option>
+                                    {% endif %}
+                                    {% if data.type == 7 %}
+                                        <option value="7" selected>old catalog</option>
+                                    {% else %}
+                                        <option value="7">old catalog</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </form>
+                        <script>
+                            $("#cat_wrapper").ready(function(){
+                                /*
+                                We need the function for removing the bs4-backdrop from modal
+                                 */
+                                $(".modal-backdrop").remove();
+                            })
+                        </script>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" form="addEntry" class="btn btn-primary">Add Entry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="table_wrapper" class="d-flex justify-content-center">
+            {% include  'manager/bibliography/results.list.bib.twig'%}
+        </div>
+
+    </div>
+
+</div>
+
+
+{%  include 'viewer/footer.twig' %}
+</body>

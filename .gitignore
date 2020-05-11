@@ -1,0 +1,7 @@
+
+.idea/
+src/public/vendor/
+src/public/config.php
+src/public/extern-lib/
+src/public/logs/
+

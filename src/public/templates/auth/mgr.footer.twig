@@ -1,0 +1,78 @@
+
+<nav class="navbar navbar-expand-sm bg-black fixed-bottom justify-content-lg-between">
+
+            <div class="row">
+                <a href="#toolbox" data-toggle="collapse" class="entry-link"><button type="button" class="btn btn-outline-dare btn-sm"><i class="fas fa-ellipsis-v"></i></button></a>
+
+                <ul id="toolbox" class="navbar-nav nav-pills no-p-tb collapse hide">
+                    <li class="nav-item">
+                        <div class="dropup">
+                            <button type="button" class="btn btn-outline-dare btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-pen-square"></i> API
+                            </button>
+
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header">Bibliography</li>
+                                <small>
+                                <li><a class="dropdown-item" href="/api/index/bib/getWithAggs">Index + Aggregations</a></li>
+                                <li><a class="dropdown-item" href="/api/index/bib/getAll">Index</a></li>
+                                <li><a class="dropdown-item" href="/api/db/bib/getAll">Direct DB</a></li>
+                                </small>
+                                <hr>
+                                <li class="dropdown-header">Fulltexts</li>
+                                <small>
+                                <li><a class="dropdown-item" href="/api/index/fulltexts/getAll">Index</a></li>
+                                </small>
+                                <hr>
+                                <li class="dropdown-header">Manuscripts</li>
+                                <small>
+                                <li><a class="dropdown-item" href="/api/index/ms/getWithAggs">Index + Aggregations</a></li>
+                                <li><a class="dropdown-item" href="/api/index/ms/getAll">Index</a></li>
+                                <li><a class="dropdown-item" href="/api/db/ms/getAll">Direct DB</a></li>
+                                </small>
+                                <hr>
+                                <li class="dropdown-header">Works</li>
+                                <small>
+                                <li><a class="dropdown-item" href="/api/index/works/getWithAggs">Index + Aggregations</a></li>
+                                <li><a class="dropdown-item" href="/api/index/works/getAll">Index</a></li>
+                                <li><a class="dropdown-item" href="/api/db/works/getAll">Direct DB</a></li>
+                                </small>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropup">
+                            <button type="button" class="btn btn-outline-dare btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-user-lock"></i> Admin
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/admin/indexMs">Re-Index Manuscripts</a>
+                                <a class="dropdown-item" href="/admin/indexBib">Re-Index Bibliography</a>
+                                <a class="dropdown-item" href="/admin/indexFulltexts">Re-Index Fulltexts</a>
+                                <a class="dropdown-item" href="/admin/indexWorks">Re-Index Works</a>
+                                <a class="dropdown-item" href="/admin/prepareIndex/manuscripts">Prepare Manuscripts</a>
+                                <a class="dropdown-item" href="/admin/prepareIndex/bibliography">Prepare Bibliography</a>
+                                <a class="dropdown-item" href="/admin/prepareIndex/fulltexts">Prepare Fulltexts</a>
+                                <a class="dropdown-item" href="/admin/prepareIndex/works">Prepare Works</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <a href="www.uni-koeln.de"><img src="/assets/img/uni_logo.png" class="img-fluid pr-2" alt="University of Cologne" style="max-height: 3vh"></a>
+                <a href="www.dfg.de"><img src="/assets/img/dfg_logo.png" class="img-fluid" alt="DFG" style="max-height: 3vh"></a>
+                <a href="www.dare.uni-koeln.de/app/"><img src="/assets/img/DareViewer_Logo.png" class="img-fluid pl-5" alt="DARE" style="max-height: 3vh"></a>
+            </div>
+
+
+
+
+
+
+
+
+
+
+</nav>

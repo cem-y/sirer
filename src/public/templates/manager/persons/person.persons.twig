@@ -1,0 +1,117 @@
+{% include 'manager/mgr.head.twig' %}
+<body style="background-image: url('{{ webInfo.baseurl }}assets/img/dare_background.jpg'); background-size: cover; background-attachment: fixed; font-family: 'Source Sans Pro';">
+{%  include 'manager/mgr.topnav.twig' %}
+
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-center mt-5">
+        <div class="col-sm-9 ml-5 mt-5 ">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <button class="small" data-toggle="collapse" data-target="#admin"><i class="fas fa-code"></i></button>
+                        </div>
+                        <div class="col-sm-10">
+                            <p class="lead text-center">{{ data.full_name }} <span class="badge badge-danger">{{ data.id }}</span></p>
+                        </div>
+                    </div>
+                    <div id="admin" class="collapse">
+                        <kbd class="small">{{ data|json_encode }}</kbd>
+                    </div>
+                </div>
+                <div class="container-fluid" >
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="card-body" >
+                                <div class="card mb-3">
+                                    <div class="card-header">Bibliography</div>
+                                    <div class="card-body" style="max-height: 50vh; overflow-y: auto">
+                                        <ul class="list-group"></ul>
+                                        {% for b in data.bibliography %}
+                                            <a href="{{ webInfo.baseurl }}manager/bibliography/{{ b.id }}" class="text-info"><li class="list-group-item"><small>{% if b.date %}({{ b.date }}) {% endif %}{{ b.title }}</small></li></a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card-body">
+                                <form method="post">
+                                    <input type="hidden" name="_METHOD" value="PUT">
+                                    <fieldset>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Full Name</span>
+                                            </div>
+                                            <input id="full_name" type="text" class="form-control" name="full_name" placeholder="full_name" value="{{ data.full_name }}" required>
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">First Name</span>
+                                            </div>
+                                            <input id="first_name" type="text" class="form-control" name="first_name" value="{{ data.first_name }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Last Name</span>
+                                            </div>
+                                            <input id="last_name" type="text" class="form-control" name="last_name" value="{{ data.last_name }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Short Ident</span>
+                                            </div>
+                                            <input id="short_ident" type="text" class="form-control" name="short_ident" value="{{ data.short_ident }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">DNB Link</span>
+                                            </div>
+                                            <input id="dnb_url" type="text" class="form-control" name="dnb_url" value="{{ data.dnb_url }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">VIAF Link</span>
+                                            </div>
+                                            <input id="viaf_url" type="text" class="form-control" name="viaf_url" value="{{ data.viaf_url }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">DB Link</span>
+                                            </div>
+                                            <input id="db_url" type="text" class="form-control" name="db_url" value="{{ data.db_url }}">
+                                        </div>
+                                    </fieldset>
+                 <input type="submit" class="btn btn-success btn-sm btn-block" value="SAVE CHANGES">
+                                </form>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-3">
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+{%  include 'viewer/footer.twig' %}
+</body>

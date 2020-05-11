@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en-US">
+<!-- {{ signature }} -->
+<head>
+    <link rel="stylesheet" type="text/css" href="{{baseurl}}/node_modules/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="{{baseurl}}/css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Sans"/>
+    <title>Averroes Project Login</title>
+</head>
+<body>
+<div id="login">
+    <form action="{{baseurl}}/login" method="post">
+        <table>
+            <tr><td colspan="2" align="center"><img src="{{baseurl}}/images/averroes-logo-400.png"></td></tr>
+            <tr><td colspan="2">&nbsp;</td></tr>
+            <tr><td colspan="2">&nbsp;</td></tr>
+            <tr><td class="largetext">Username:</td><td align="right"><input class="logininput" type="text" name="user" size="10" required></td></tr>
+            <tr><td colspan="2">&nbsp;</td></tr>
+            <tr><td class="largetext">Password:</td><td align="right"><input class="logininput" type="password" name="pwd" size="10" required></td></tr>
+            <tr><td colspan="2">&nbsp;</td></tr>
+            <tr><td colspan="2" align="left"><input type="checkbox" id="cbox" name="rememberme"/>&nbsp;&nbsp;Remember me</td></tr>
+            <tr><td colspan="2" align="right"><p><input class="logininput" type="submit" value="Login"></p></td></tr>
+        </table>
+    </form>
+
+    {% if message %}
+        <div class="alert alert-danger alert-dismissable withtopmargin" role="alert">
+            <button type="button" class="close" data-dismiss="alert"
+                    aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

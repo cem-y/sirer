@@ -1,0 +1,185 @@
+
+    <small>Authors:</small><br>
+
+    <div class="flex-row">
+        {% for person in data.persons %}
+            {%  if person.role.id == 1 %}
+                <button type="button" class="btn btn-sm btn-outline-primary small"><a class="entry-link" href="#" data-toggle="modal" data-target="#person{{ person.id }}"  ic-target="#person_wrapper">{{ person.free_name }} <i class="fas fa-edit"></i></a></button>
+            {% endif %}
+        {%  endfor %}
+        <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="#" data-toggle="modal" data-target="#addModal1"><i class="fas fa-plus-square"></i></a></button>
+    </div>
+    <hr class="bright-dare">
+    <small>Editors:</small><br>
+    <div class="flex-row">
+        {% for person in data.persons %}
+            {%  if person.role.id == 2 %}
+                <button type="button" class="btn btn-sm btn-outline-primary small"><a class="entry-link" href="#" data-toggle="modal" data-target="#person{{ person.id }}"  ic-target="#person_wrapper">{{ person.free_name }} <i class="fas fa-edit"></i></a></button>
+            {% endif %}
+        {%  endfor %}
+        <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="#" data-toggle="modal" data-target="#addModal2"><i class="fas fa-plus-square"></i></a></button>
+    </div>
+    <hr class="bright-dare">
+    <small>Translators:</small><br>
+    <div class="flex-row">
+        {% for person in data.persons %}
+            {%  if person.role.id == 3 %}
+                <button type="button" class="btn btn-sm btn-outline-primary small"><a class="entry-link" href="#" data-toggle="modal" data-target="#person{{ person.id }}"  ic-target="#person_wrapper">{{ person.free_name }} <i class="fas fa-edit"></i></a></button>
+            {% endif %}
+        {%  endfor %}
+        <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="#" data-toggle="modal" data-target="#addModal3"><i class="fas fa-plus-square"></i></a></button>
+    </div>
+    <hr class="bright-dare">
+    <small>Publisher:</small><br>
+    <div class="flex-row">
+        {% for person in data.persons %}
+            {%  if person.role.id == 4 %}
+                <button type="button" class="btn btn-sm btn-outline-primary small"><a class="entry-link" href="#" data-toggle="modal" data-target="#person{{ person.id }}"  ic-target="#person_wrapper">{{ person.free_name }} <i class="fas fa-edit"></i></a></button>
+            {% endif %}
+        {%  endfor %}
+        <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="#" data-toggle="modal" data-target="#addModal4"><i class="fas fa-plus-square"></i></a></button></div>
+
+    {% for person in data.persons %}
+        <div class="modal fade" id="person{{ person.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-black-50" id="exampleModalLabel">Add {% if i == 1 %}Author{% elseif i == 2 %}Editor{% elseif i == 3 %}Translator{% elseif i == 4 %}Publisher{% endif %}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updatePerson{{ person.id }}" method="post" ic-post-to="{{ webInfo.baseurl }}manager/bibliography/{{ data.id }}/person/{{ person.id }}" ic-target="#person_wrapper">
+
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Free Name</span>
+                                </div>
+                                <input type="text"  id="free_name" class="form-control" name="free_name" value="{{ person.free_name }}">
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">First Free Name</span>
+                                </div>
+                                <input type="text"  id="free_first_name" class="form-control" name="free_first_name" value="{{ person.free_first_name }}">
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Last Free Name</span>
+                                </div>
+                                <input type="text"  id="free_last_name" class="form-control" name="free_last_name" value="{{ person.free_last_name }}">
+                            </div>
+
+                            <select id="role" name="role" class="custom-select">
+                                {% if person.role.id == 1 %}
+                                    <option value="1" selected>Author</option>
+                                {% else %}
+                                    <option value="1" >Author</option>
+                                {% endif %}
+                                {% if person.role.id == 2 %}
+                                    <option value="2" selected>Editor</option>
+                                {% else %}
+                                    <option value="2" >Editor</option>
+                                {% endif %}
+                                {% if person.role.id == 3 %}
+                                    <option value="3" selected>Translator</option>
+                                {% else %}
+                                    <option value="3" >Translator</option>
+                                {% endif %}
+                                {% if person.role.id == 4 %}
+                                    <option value="4" selected>Publisher</option>
+                                {% else %}
+                                    <option value="4" >Publisher</option>
+                                {% endif %}
+                            </select>
+                            <select name="person_id" class="custom-select">
+                                <option value="x" selected>select a registered person</option>
+                                {% for n_person in data.all_persons%}
+                                    {% if person.person_id == n_person.id %}
+                                    <option value="{{ n_person.id }}" selected>{{ n_person.full_name }}</option>
+                                        {% else %}
+                                            <option value="{{ n_person.id }}">{{ n_person.full_name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </form>
+                        <script>
+                            $("#person_wrapper").ready(function(){
+                                /*
+                                We need the function for removing the bs4-backdrop from modal
+                                 */
+                                $(".modal-backdrop").remove();
+                            })
+                        </script>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" form="updatePerson{{ person.id }}" class="btn btn-success">Save Changes</button>
+                        <button type="button" class="btn btn-danger"><a class="entry-link" ic-delete-from="{{ webInfo.baseurl }}manager/bibliography/{{ data.id }}/person/{{ person.id }}" ic-target="#person_wrapper">Delete {% if person.role.id == 1 %}Author{% elseif person.role.id == 2 %}Editor{% elseif person.role.id == 3 %}Translator{% else %}Publisher{% endif %}</a></button>
+                        <a href="{{ webInfo.baseurl }}manager/persons" target="_blank"><button type="button" class="btn btn-primary">Register Person</button></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+
+
+    {% for i in 1..4 %}
+    <div class="modal fade" id="addModal{{ i }}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-black-50" id="exampleModalLabel">Add {% if i == 1 %}Author{% elseif i == 2 %}Editor{% elseif i == 3 %}Translator{% elseif i == 4 %}Publisher{% endif %}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addPerson{{ i }}" method="post" ic-post-to="{{ webInfo.baseurl }}manager/bibliography/{{ data.id }}/person" ic-target="#person_wrapper">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Free Name</span>
+                            </div>
+                            <input type="text"  id="free_name" class="form-control" name="free_name">
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">First Free Name</span>
+                            </div>
+                            <input type="text"  id="first_free_name" class="form-control" name="first_free_name" >
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Last Free Name</span>
+                            </div>
+                            <input type="text"  id="last_free_name" class="form-control" name="last_free_name" >
+                        </div>
+                        <input type="hidden" id="role_id" name="role_id" value="{{ i }}">
+                        <select name="person_id" class="custom-select">
+                            <option value="x" selected>select a registered person</option>
+                            {% for person in data.all_persons%}
+                                <option value="{{ person.id }}">{{ person.full_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                    <script>
+                        $("#person_wrapper").ready(function(){
+                            /*
+                            We need the function for removing the bs4-backdrop from modal
+                             */
+                            $(".modal-backdrop").remove();
+                        })
+                    </script>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="addPerson{{ i }}" class="btn btn-success">Add {% if i == 1 %}Author{% elseif i == 2 %}Editor{% elseif i == 3 %}Translator{% elseif i == 4 %}Publisher{% endif %}</button>
+                    <a href="{{ webInfo.baseurl }}manager/persons" target="_blank"><button type="button" class="btn btn-primary">Register Person</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+

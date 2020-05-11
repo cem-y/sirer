@@ -1,0 +1,67 @@
+<ul class="list-group list-group-flush">
+    <a class="entry-link" href="#" data-toggle="modal" data-target="#bookModal">
+        <li class="list-group-item cursor-pointer"><small>Publication Place: <span class="text-info">{{ data.book.pubplace }}</span></small></li>
+        <li class="list-group-item cursor-pointer"><small>Publisher: <span class="text-info">{{ data.book.publisher }}</span></small></li>
+        <li class="list-group-item cursor-pointer"><small>Series: <span class="text-info">{{ data.book.series }}</span></small></li>
+        <li class="list-group-item cursor-pointer"><small>Volume: <span class="text-info">{{ data.book.volume }}</span></small></li>
+        <li class="list-group-item cursor-pointer"><small>Edition No.: <span class="text-info">{{ data.book.edition_no }}</span></small></li>
+    </a>
+</ul>
+
+<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-black-50" id="exampleModalLabel">Edit {% if data.type==1 %}Monograph{% else %}Edited Book{% endif %} Description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="book" ic-put-to="{{ webInfo.baseurl }}manager/bibliography/{{ data.id }}/book" ic-target="#description_wrapper">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Publication Place</span>
+                        </div>
+                        <input type="text"  id="pubplace" class="form-control" name="pubplace" value="{{ data.book.pubplace }}">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Publisher</span>
+                        </div>
+                        <input type="text"  id="publisher" class="form-control" name="publisher" value="{{ data.book.publisher }}">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Series</span>
+                        </div>
+                        <input type="text"  id="series" class="form-control" name="series" value="{{ data.book.series }}">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Volume</span>
+                        </div>
+                        <input type="text"  id="volume" class="form-control" name="volume" value="{{ data.book.volume }}">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Edition No.</span>
+                        </div>
+                        <input type="text"  id="edition_no" class="form-control" name="edition_no" value="{{ data.book.edition_no }}">
+                    </div>
+                </form>
+                <script>
+                    $("#description_wrapper").ready(function(){
+                        /*
+                        We need the function for removing the bs4-backdrop from modal
+                         */
+                        $(".modal-backdrop").remove();
+                    })
+                </script>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="book" class="btn btn-success">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>

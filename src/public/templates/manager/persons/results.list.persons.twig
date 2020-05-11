@@ -1,0 +1,52 @@
+<table class="table table-striped bg-white" style="max-width: 80vw; opacity: 0.9">
+
+    <thead>
+    {% if data.order.order != "id" %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=id&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> DB:ID</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=id&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> DB:ID</a></th>
+    {% else %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=id&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> DB:ID</a></th>
+    {% endif %}
+    {% if data.order.order != "full_name" %}
+        <th><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=full_name&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> Full Name</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=full_name&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> Full Name</a></th>
+    {% else %}
+        <th><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=full_name&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> Full Name</a></th>
+    {% endif %}
+    {% if data.order.order != "first_name" %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=first_name&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> First Name</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=first_name&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> First Name</a></th>
+    {% else %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=first_name&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> First Name</a></th>
+    {% endif %}
+    {% if data.order.order != "last_name" %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=last_name&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> Last Name</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=last_name&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> Last Name</a></th>
+    {% else %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/persons?order=last_name&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> Last Name</a></th>
+    {% endif %}
+
+    <th>DNB</th>
+    <th>VIAF</th>
+    <th>DB</th>
+    <th></th>
+    </thead>
+    <tbody>
+    {% for entry in data %}
+    <tr>
+        <th>{{ entry.id }}</th>
+        <th>{{ entry.full_name }}</th>
+        <th>{{ entry.first_name }}</th>
+        <th>{{ entry.last_name }}</th>
+        <th>{% if entry.dnb_url %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</th>
+        <th>{% if entry.viaf_url %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</th>
+        <th>{% if entry.db_url %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</th>
+        <th><a href="{{ webInfo.baseurl }}manager/persons/{{ entry.id }}"><i class="fas fa-edit text-info"></i></a></th>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

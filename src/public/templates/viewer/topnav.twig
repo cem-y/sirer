@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-sm bg-bright navbar-dark fixed-top justify-content-lg-between fixed-top bg-dare-nav no-p-tb">
+
+    <ul class="navbar-nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link {% if webInfo.area == "works" %}active{% endif %}" href="{{ webInfo.baseurl }}works"><i class="fas fa-book"></i> Works</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if webInfo.area == "sources" %}active{% endif %}" href="{{ webInfo.baseurl }}sources"><i class="fas fa-scroll"></i> Sources</a>
+        </li>
+    </ul>
+
+
+
+    <ul class="navbar-nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link {% if webInfo.area == "bibliography" %}active{% endif %}" href="{{ webInfo.baseurl }}bib"><i class="fas fa-book-open"></i>  Bibliography</a>
+        </li>
+        <form class="form-inline" action="{{ webInfo.baseurl }}search">
+            <input class="form-control bg-dare-dark border-0" type="text"  name="freetext[]" placeholder="Fulltext Search">
+            <div class="input-group-append">
+                <button class="btn btn-dare" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+
+    </ul>
+</nav>

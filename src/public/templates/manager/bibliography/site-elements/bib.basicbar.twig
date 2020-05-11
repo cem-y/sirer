@@ -1,0 +1,28 @@
+<ul class="list-group list-group-flush">
+    <li class="list-group-item"><small>Title: <a href="#" data-toggle="modal" data-target="#detailedModal">{% if bibEntry.title %}{{ bibEntry.title }}{% else %}<button type="button" class="btn btn-sm btn-secondary"><i class="fas fa-plus-square"></i></button>{% endif %}</a></small></li>
+    <li class="list-group-item"><small>Transcription: <a href="#" data-toggle="modal" data-target="#detailedModal">{% if bibEntry.title_transcript %}{{ bibEntry.title_transcript }}{% else %}<button type="button" class="btn btn-sm btn-secondary"><i class="fas fa-plus-square"></i></button>{% endif %}</a></small></li>
+    <li class="list-group-item"><small>Translation: <a href="#" data-toggle="modal" data-target="#detailedModal">{% if bibEntry.title_translation %}{{ bibEntry.title_translation }}{% else %}<button type="button" class="btn btn-sm btn-secondary"><i class="fas fa-plus-square"></i></button>{% endif %}</a></small></li>
+    <li class="list-group-item"><small>Short Title: <a href="#" data-toggle="modal" data-target="#detailedModal">{% if bibEntry.short_title %}{{ bibEntry.short_title }}{% else %}<button type="button" class="btn btn-sm btn-secondary"><i class="fas fa-plus-square"></i></button>{% endif %}</a></small></li>
+    <li class="list-group-item"><small>Language: <a href="#" data-toggle="modal" data-target="#detailedModal">{% if bibEntry.language %}{{ bibEntry.language }}{% else %}<button type="button" class="btn btn-sm btn-secondary"><i class="fas fa-plus-square"></i></button>{% endif %}</a></small></li>
+    <li class="list-group-item"><small>Date: <a href="#" data-toggle="modal" data-target="#detailedModal">{% if bibEntry.date %}{{ bibEntry.date }}{% else %}<button type="button" class="btn btn-sm btn-secondary"><i class="fas fa-plus-square"></i></button>{% endif %}</a></small></li>
+    </ul>
+
+<div class="modal fade" id="detailedModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure to leave the side? Unsaved changes will be lost.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <a href="/bib/bib/{{ bibEntry.id }}"><button type="button" class="btn btn-primary">Go to Site</button></a>
+            </div>
+        </div>
+    </div>
+</div>

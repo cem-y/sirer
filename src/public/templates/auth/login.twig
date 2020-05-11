@@ -1,0 +1,50 @@
+{% include 'auth/auth.head.twig' %}
+<body class="manager">
+{%  include 'auth/auth.topnav.twig' %}
+
+
+<div class="container-fluid mt-5 d-flex justify-content-center">
+    <div class="card  text-white bg-dark mt-5" style="min-width: 33vw">
+        <div class="card-header bg-dare-card-header">
+            <span class="badge badge bg-dare">Login to DARE.one</span>
+
+        </div>
+        <div class="card-body bg-dare-card-body" >
+            <div id="login">
+                <form action="{{webInfo.baseurl}}login" id="login-form" method="post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">User</span>
+                        </div>
+                        <input type="text" class="form-control" name="user" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                        </div>
+                        <input type="password" class="form-control" name="pwd" required>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-1">
+                        <input type="checkbox" class="custom-control-input" id="cbox" name="rememberme">
+                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                    </div>
+
+                        
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+        <div class="card-footer bg-dare-card-header">
+            <button type="submit" form="login-form" class="btn btn-dare mb-2">Submit</button>
+        </div>
+    </div>
+
+</div>
+
+
+{%  include 'viewer/footer.twig' %}
+</body>

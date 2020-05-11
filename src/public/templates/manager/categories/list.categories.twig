@@ -1,0 +1,71 @@
+{% include 'manager/mgr.head.twig' %}
+<body style="background-image: url('{{ webInfo.baseurl }}assets/img/dare_background.jpg'); background-size: cover; background-attachment: fixed; font-family: 'Source Sans Pro';">
+{%  include 'manager/mgr.topnav.twig' %}
+
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-center flex-column mt-5">
+
+        <div class="d-flex justify-content-center" >
+            <form>
+                <div class="input-group mb-3" style="min-width:80vw; max-width: 80vw">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Filter Results</span>
+                    </div>
+                    <input type="search" class="form-control" name="freetext" id="freetext" placeholder="..." ic-post-to="{{ webInfo.baseurl }}manager/categories" ic-trigger-on="keyup changed" ic-target="#table_wrapper" ic-trigger-delay="500ms">
+                    <div class="input-group-append">
+                        <a data-toggle="modal" data-target="#newEntry"><button class="btn btn-success" type="button">Add</button></a>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+
+        <div class="modal fade" id="newEntry" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-secondary" id="exampleModalLabel">Create a new category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addEntry" method="post" action="{{ webInfo.baseurl }}manager/categories/new">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Category Name</span>
+                                </div>
+                                <input id="category_name" type="text" class="form-control" name="category_name" placeholder="Enter Category"  required>
+                            </div>
+
+                        </form>
+                        <script>
+                            $("#cat_wrapper").ready(function(){
+                                /*
+                                We need the function for removing the bs4-backdrop from modal
+                                 */
+                                $(".modal-backdrop").remove();
+                            })
+                        </script>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" form="addEntry" class="btn btn-primary">Add Entry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="table_wrapper" class="d-flex justify-content-center">
+            {% include  'manager/categories/results.list.categories.twig'%}
+        </div>
+
+    </div>
+
+</div>
+
+
+{%  include 'viewer/footer.twig' %}
+</body>

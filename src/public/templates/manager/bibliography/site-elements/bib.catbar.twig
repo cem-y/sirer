@@ -1,0 +1,28 @@
+
+<div class="flex-row">
+    {% for cat in bibEntry.0.categories %}
+        <button type="button" class="btn btn-sm btn-outline-primary"><a class="entry-link" href="#" data-toggle="modal" data-target="#catModal{{ cat.pivot.id }}">{{ cat.category_name }} <span class="badge badge-danger">{{ cat.id }}</span></a></button>
+    {%  endfor %}
+    <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="/bibliography/catentry-create/{{ cat.id }}"><i class="fas fa-plus-square"></i></a></button>
+</div>
+{% for cat in entryCategories %}
+<div class="modal fade" id="catModal{{ cat.pivot.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure to leave the side? Unsaved changes will be lost.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <a href="/bib/catentry/{{ cat.pivot.id }}"><button type="button" class="btn btn-primary">Go to Site</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

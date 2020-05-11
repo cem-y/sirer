@@ -1,0 +1,63 @@
+
+    <small>Authors:</small><br>
+    <div class="flex-row">
+        {% for person in bibEntry.0.persons %}
+            {%  if person.role == 1 %}
+                <button type="button" class="btn btn-sm btn-outline-primary small"><a class="entry-link" href="/bib/personentry/{{ person.id }}" data-toggle="modal" data-target="#personModal{{ person.id }}">{{ person.free_name }}</a></button>
+            {% endif %}
+        {%  endfor %}
+        <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="/bibliography/personentry-create/{{ id }}"><i class="fas fa-plus-square"></i></a></button>
+    </div>
+    <hr class="bright-dare">
+    <small>Editors:</small><br>
+    <div class="flex-row">
+        {% for person in bibEntry.0.persons %}
+            {%  if person.role == 2 %}
+                <button type="button" class="btn btn-sm btn-outline-primary small"><a class="entry-link" href="/bib/personentry/{{ person.id }}" data-toggle="modal" data-target="#personModal{{ person.id }}">{{ person.free_name }}</a></button>
+            {% endif %}
+        {%  endfor %}
+        <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="/bibliography/personentry-create/{{ id }}"><i class="fas fa-plus-square"></i></a></button>
+    </div>
+    <hr class="bright-dare">
+    <small>Translators:</small><br>
+    <div class="flex-row">
+        {% for person in bibEntry.0.persons %}
+            {%  if person.role == 3 %}
+                <button type="button" class="btn btn-sm btn-outline-primary small"><a class="entry-link" href="/bib/personentry/{{ person.id }}" data-toggle="modal" data-target="#personModal{{ person.id }}">{{ person.free_name }}</a></button>
+            {% endif %}
+        {%  endfor %}
+        <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="/bibliography/personentry-create/{{ id }}"><i class="fas fa-plus-square"></i></a></button>
+    </div>
+    <hr class="bright-dare">
+    <small>Publisher:</small><br>
+    <div class="flex-row">
+        {% for person in bibEntry.0.persons %}
+            {%  if person.role == 4 %}
+                <button type="button" class="btn btn-sm btn-outline-primary small"><a class="entry-link" href="/bib/personentry/{{ person.id }}" data-toggle="modal" data-target="#personModal{{ person.id }}">{{ person.free_name }}</a></button>
+            {% endif %}
+        {%  endfor %}
+        <button type="button" class="btn btn-sm btn-secondary"><a class="entry-link" href="/bibliography/personentry-create/{{ id }}"><i class="fas fa-plus-square"></i></a></button>
+    </div>
+
+    {%  for person in bibEntry.0.persons %}
+        <div class="modal fade" id="personModal{{ person.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure to leave the side? Unsaved changes will be lost.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <a href="/bib/personentry/{{ person.id }}"><button type="button" class="btn btn-primary">Go to Site</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}

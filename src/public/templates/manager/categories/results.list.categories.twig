@@ -1,0 +1,29 @@
+<table class="table table-striped bg-white" style="max-width: 80vw; opacity: 0.9">
+
+    <thead>
+    {% if data.order.order != "id" %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/categories?order=id&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> DB:ID</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/categories?order=id&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> DB:ID</a></th>
+    {% else %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/categories?order=id&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> DB:ID</a></th>
+    {% endif %}
+    {% if data.order.order != "category_name" %}
+        <th><a ic-post-to="{{ webInfo.baseurl }}/manager/categories?order=category_name&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> Category</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th><a ic-post-to="{{ webInfo.baseurl }}/manager/categories?order=category_name&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> Category</a></th>
+    {% else %}
+        <th><a ic-post-to="{{ webInfo.baseurl }}/manager/categories?order=category_name&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> Category</a></th>
+    {% endif %}
+    <th></th>
+    </thead>
+    <tbody>
+    {% for entry in data %}
+    <tr>
+        <th>{{ entry.id }}</th>
+        <th>{{ entry.category_name }}</th>
+        <th><a href="{{ webInfo.baseurl }}manager/categories/{{ entry.id }}"><i class="fas fa-edit text-info"></i></a></th>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

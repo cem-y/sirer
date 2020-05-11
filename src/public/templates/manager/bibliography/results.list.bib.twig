@@ -1,0 +1,55 @@
+<table class="table table-striped bg-white" style="max-width: 80vw; opacity: 0.9">
+
+    <thead>
+    {% if data.order.order != "id" %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=id&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> DB:ID</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=id&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> DB:ID</a></th>
+    {% else %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=id&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> DB:ID</a></th>
+    {% endif %}
+    {% if data.order.order != "title" %}
+        <th><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=title&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> Title</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=title&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> Title</a></th>
+    {% else %}
+        <th><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=title&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> Title</a></th>
+    {% endif %}
+    {% if data.order.order != "type" %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=type&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> Type</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=type&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> Type</a></th>
+    {% else %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=type&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> Type</a></th>
+    {% endif %}
+    {% if data.order.order != "date" %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=date&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> Date</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=date&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> Date</a></th>
+    {% else %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=date&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> Date</a></th>
+    {% endif %}
+    <th>Involved Persons</th>
+    {% if data.order.order != "is_inactive" %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=is_inactive&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort"></i> Active</a></th>
+    {% elseif data.order.dir=="asc"  %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=is_inactive&dir=desc" ic-target="#table_wrapper"><i class="fas fa-sort-up"></i> Active</a></th>
+    {% else %}
+        <th style="min-width: 5vw"><a ic-post-to="{{ webInfo.baseurl }}/manager/bibliography?order=is_inactive&dir=asc" ic-target="#table_wrapper"><i class="fas fa-sort-down"></i> Active</a></th>
+    {% endif %}
+    <th></th>
+    </thead>
+    <tbody>
+    {% for entry in data %}
+    <tr>
+        <th>{{ entry.id }}</th>
+        <th>{{ entry.title }}</th>
+        <th>{% if entry.type ==1 %}Monograph{% elseif entry.type==2 %}Book Section{% elseif entry.type==3 %}Article{% elseif entry.type==4 %}Edited Book{% elseif entry.type==5 %}Book Series{% elseif entry.type==6 %}Online Catalog{% elseif entry.type==7 %}Old Catalog{% endif %}</th>
+        <th>{{ entry.date }}</th>
+        <th>{% for person in entry.persons %}{{ person.free_name }}{% if entry.persons|length == loop.index %}{% else %}, {% endif %}{% endfor %}</th>
+        <th>{% if entry.is_inactive == 1%}<i class="fas fa-times-circle text-danger"></i>{% else %}<i class="fas fa-check-circle text-success"></i>{% endif %}</th>
+        <th><a href="{{ webInfo.baseurl }}manager/bibliography/{{ entry.id }}"><i class="fas fa-edit text-info"></i></a></th>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,101 @@
+{% include 'manager/mgr.head.twig' %}
+<body style="background-image: url('{{ webInfo.baseurl }}assets/img/dare_background.jpg'); background-size: cover; background-attachment: fixed; font-family: 'Source Sans Pro';">
+{%  include 'manager/mgr.topnav.twig' %}
+
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-center mt-5">
+        <div class="col-sm-9 ml-5 mt-5 ">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <button class="small" data-toggle="collapse" data-target="#admin"><i class="fas fa-code"></i></button>
+                        </div>
+                        <div class="col-sm-10">
+                            <p class="lead text-center">{{ data.username }} <span class="badge badge-danger">{{ data.id }}</span></p>
+                        </div>
+                    </div>
+                    <div id="admin" class="collapse">
+                        <kbd class="small">{{ data|json_encode }}</kbd>
+                    </div>
+                </div>
+                <div class="container-fluid" >
+                    <div class="row">
+                        <div class="col-sm-3">
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card-body">
+                                <form method="post" oninput='up2.setCustomValidity(password2.value != password1.value ? "Passwords do not match." : "")'>
+                                    <input type="hidden" name="_METHOD" value="PUT">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">First Name</span>
+                                            </div>
+                                            <input id="firstname" type="text" class="form-control" name="firstname" placeholder="enter first name..." value="{{ data.firstname }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Last Name</span>
+                                            </div>
+                                            <input id="lastname" type="text" class="form-control" name="lastname" value="{{ data.lastname }}">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">New Password</span>
+                                            </div>
+                                            <input id="password1" type="password" class="form-control pwd" name="password1">
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Confirm Password</span>
+                                            </div>
+                                            <input id="password2" type="password" class="form-control pwd" name="password2">
+                                        </div>
+                                    <script>
+                                        $('.pwd').on('input', function () {
+                                            if ($('#password1').val()!==$('#password2').val()){
+                                                $('#wrongPassword').removeAttr("hidden");
+                                                $('#submitter').attr("disabled", "disabled");
+                                            } else {
+                                                $('#wrongPassword').attr("hidden", "hidden");
+                                                $('#submitter').removeAttr("disabled");
+                                            }
+                                        })
+
+                                    </script>
+                                    <span class="text-dare font-italic" id="wrongPassword" hidden><small>passwords not the same</small></span>
+
+
+                                    <input id="submitter" type="submit" class="btn btn-success btn-sm btn-block" value="SAVE CHANGES" >
+                                </form>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-3">
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+{%  include 'viewer/footer.twig' %}
+</body>

@@ -1,0 +1,159 @@
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="date" role="tabpanel" aria-labelledby="date-tab">
+            <div id="accordion">
+                {% for entry in data.results.byDate.hits.hits %}
+                <div class="card {% if loop.index is odd %}bg-dare-dark{% else %}bg-black{% endif %} text-white" data-toggle="collapse" href="#d_entry_{{ loop.index }}">
+                    <div class="card-header">
+                        <i class="fas fa-caret-right text-dare"></i> {{ entry._source.title }}{% if entry._source.date %}, {{ entry._source.date }}{% endif %}<br>
+                        <small>{% if entry._source.authors is not empty %}
+                            By:
+                            {% for a in entry._source.authors  %}
+                            {{ a.full_name }}{% if a.role == 2 %} (Ed.){% endif %}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                            {% endif %}</small>
+                    </div>
+                    <div id="d_entry_{{ loop.index }}" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <small>
+                                <p class="font-weight-bold">Bibliographic Description</p>
+                                <hr>
+                                {% if entry._source.title %}<p>Title: {{ entry._source.title }}</p>{% endif %}
+                                {% if entry._source.title_transcript %}<p>Transcription (Title): {{ entry._source.title_transcript }}</p>{% endif %}
+                                {% if entry._source.title_translation %}<p>Translation (Title): {{ entry._source.title_translation }}</p>{% endif %}
+                                {% if entry._source.abstract %}<p>Abstract: {{ entry._source.abstract }}</p>{% endif %}
+
+                                {% if entry._source.btype == 1 or entry._source.btype == 4 %}
+                                    {% if entry._source.book.pubplace %}<p>Place: {{ entry._source.book.pubplace }}</p>{% endif %}
+                                    {% if entry._source.book.publisher %}<p>Publisher: {{ entry._source.book.publisher }}</p>{% endif %}
+                                    {% if entry._source.book.series %}<p>Series: {{ entry._source.book.series }}</p>{% endif %}
+                                    {% if entry._source.book.volume %}<p>Volume: {{ entry._source.book.volume }}</p>{% endif %}
+                                    {% if entry._source.book.edition_no %}<p>Edition No.: {{ entry._source.book.edition_no }}</p>{% endif %}
+                                {% endif %}
+                                {% if entry._source.btype == 2 %}
+                                    <p>Published in:</p>
+                                    <span class="font-italic">
+
+                                        {% if entry._source.booksection.book.title %}<p>Title: {{ entry._source.booksection.book.title }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.pubplace %}<p>Place: {{ entry._source.booksection.book.book.pubplace }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.publisher %}<p>Publisher: {{ entry._source.booksection.book.book.publisher }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.series %}<p>Series: {{ entry._source.booksection.book.book.series }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.volume %}<p>Volume: {{ entry._source.booksection.book.book.volume }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.edition_no %}<p>Edition No.: {{ entry._source.booksection.book.book.edition_no }}</p>{% endif %}
+                                    </span>
+                                    {% if entry._source.booksection.pages %}<p>Pages: {{ entry._source.booksection.pages }}</p>{% endif %}
+                                {% endif %}
+                                {% if entry._source.btype == 3 %}
+                                    {% if entry._source.article.journal_name %}<p>Journal: {{ entry._source.article.journal_name }}</p>{% endif %}
+                                    {% if entry._source.article.volume %}<p>Volume:  {{ entry._source.article.volume }}</p>{% endif %}
+                                    {% if entry._source.article.issue %}<p>Issue: {{ entry._source.article.issue }}</p>{% endif %}
+                                    {% if entry._source.article.pages %}<p>Pages: {{ entry._source.article.pages }}</p>{% endif %}
+                                {% endif %}
+                                {% if entry._source.date %}<p>Date: {{ entry._source.date }}</p>{% endif %}
+                                <p>Categories:
+                                    {% if entry._source.categories|length != 0  %}
+                                        {% for c in entry._source.categories %}
+                                            <span class="badge badge-danger bg-secondary">{{ c.category_name }}</span>
+                                        {% endfor %}
+                                        {% else %}
+                                        <span class="font-italic">no categories</span>
+                                    {% endif %}
+                                </p>
+                                <p>Authors:
+                                    {% if entry._source.authors|length != 0  %}
+                                        {% for a in entry._source.authors %}
+                                            <span class="badge badge-danger bg-secondary">{{ a.full_name }} {% if a.role == 2 %} (Ed.){% endif %}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        <span class="font-italic">no authors</span>
+                                    {% endif %}
+                                </p>
+
+
+
+
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="title" role="tabpanel" aria-labelledby="title-tab">
+            <div id="accordion">
+                {% for entry in data.results.byTitle.hits.hits %}
+                <div class="card {% if loop.index is odd %}bg-dare-dark{% else %}bg-black{% endif %} text-white" data-toggle="collapse" href="#t_entry_{{ loop.index }}">
+                    <div class="card-header">
+                        <i class="fas fa-caret-right text-dare"></i> {{ entry._source.title }} {% if entry._source.date %}, {{ entry._source.date }}{% endif %}<br>
+                        <small>{% if entry._source.authors is not empty %}
+                            By:
+                            {% for a in entry._source.authors  %}
+                            {{ a.full_name }}{% if a.role == 2 %} (Ed.){% endif %}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                            {% endif %}</small>
+                    </div>
+                    <div id="t_entry_{{ loop.index }}" class="collapse" data-parent="#accordion">
+                        <div class="card-body no-p-tb">
+                            <small>
+                                <p class="font-weight-bold">Bibliographic Description</p>
+                                <hr>
+                                {% if entry._source.btype == 1 or entry._source.btype == 4 %}
+                                    {% if entry._source.book.pubplace %}<p>Place: {{ entry._source.book.pubplace }}</p>{% endif %}
+                                    {% if entry._source.book.publisher %}<p>Publisher: {{ entry._source.book.publisher }}</p>{% endif %}
+                                    {% if entry._source.book.series %}<p>Series: {{ entry._source.book.series }}</p>{% endif %}
+                                    {% if entry._source.book.volume %}<p>Volume: {{ entry._source.book.volume }}</p>{% endif %}
+                                    {% if entry._source.book.edition_no %}<p>Edition No.: {{ entry._source.book.edition_no }}</p>{% endif %}
+                                {% endif %}
+                                {% if entry._source.btype == 2 %}
+                                    <p>Published in:</p>
+                                    <span class="font-italic">
+
+                                        {% if entry._source.booksection.book.title %}<p>Title: {{ entry._source.booksection.book.title }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.pubplace %}<p>Place: {{ entry._source.booksection.book.book.pubplace }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.publisher %}<p>Publisher: {{ entry._source.booksection.book.book.publisher }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.series %}<p>Series: {{ entry._source.booksection.book.book.series }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.volume %}<p>Volume: {{ entry._source.booksection.book.book.volume }}</p>{% endif %}
+                                        {% if entry._source.booksection.book.book.edition_no %}<p>Edition No.: {{ entry._source.booksection.book.book.edition_no }}</p>{% endif %}
+                                    </span>
+                                    {% if entry._source.booksection.pages %}<p>Pages: {{ entry._source.booksection.pages }}</p>{% endif %}
+                                {% endif %}
+                                {% if entry._source.btype == 3 %}
+                                    {% if entry._source.article.journal_name %}<p>Journal: {{ entry._source.article.journal_name }}</p>{% endif %}
+                                    {% if entry._source.article.volume %}<p>Volume:  {{ entry._source.article.volume }}</p>{% endif %}
+                                    {% if entry._source.article.issue %}<p>Issue: {{ entry._source.article.issue }}</p>{% endif %}
+                                    {% if entry._source.article.pages %}<p>Pages: {{ entry._source.article.pages }}</p>{% endif %}
+                                {% endif %}
+                                {% if entry._source.date %}<p>Date: {{ entry._source.date }}</p>{% endif %}
+                                <p>Categories:
+                                    {% if entry._source.categories|length != 0  %}
+                                        {% for c in entry._source.categories %}
+                                            <span class="badge badge-danger bg-secondary">{{ c.category_name }}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        <span class="font-italic">no categories</span>
+                                    {% endif %}
+                                </p>
+                                <p>Authors:
+                                    {% if entry._source.authors|length != 0  %}
+                                        {% for a in entry._source.authors %}
+                                            <span class="badge badge-danger bg-secondary">{{ a.full_name }} {% if a.role == 2 %} (Ed.){% endif %}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        <span class="font-italic">no authors</span>
+                                    {% endif %}
+                                </p>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <ul class="pagination pagination-sm bg-dare-card-body text-white">
+        <li class="mr-1 ml-1">PAGE <span class="bg-dare pr-1 pl-1">{{ data.page.current }}</span> OF {{ data.page.pages }} </li>
+        <li class="page-item"><a class="page-link" id="pageButton" href="{{ data.page.first }}" ic-get-from="{{ data.page.first }}" ic-target="#content_wrapper" ic-push-url="true"><i class="fas fa-fast-backward"></i></a></li>
+        <li class="page-item"><a class="page-link" id="pageButton" href="{{ data.page.back }}" ic-get-from="{{ data.page.back }}" ic-target="#content_wrapper" ic-push-url="true"><i class="fas fa-step-backward"></i></a></li>
+        <li class="page-item"><a class="page-link" id="pageButton" href="{{ data.page.next }}" ic-get-from="{{ data.page.next }}" ic-target="#content_wrapper" ic-push-url="true"><i class="fas fa-step-forward"></i></a></li>
+        <li class="page-item"><a class="page-link" id="pageButton" href="{{ data.page.last }}" ic-get-from="{{ data.page.last }}" ic-target="#content_wrapper" ic-push-url="true"><i class="fas fa-fast-forward"></i></a></li>
+    </ul>

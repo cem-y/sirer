@@ -1,0 +1,62 @@
+<ul class="list-group list-group-flush">
+    <a class="entry-link" href="#" data-toggle="modal" data-target="#articleModal">
+        <li class="list-group-item cursor-pointer"><small>Journal: <span class="text-info">{{ data.article.journal_name }}</span></small></li>
+        <li class="list-group-item cursor-pointer"><small>Volume: <span class="text-info">{{ data.article.volume }}</span></small></li>
+        <li class="list-group-item cursor-pointer"><small>Issue: <span class="text-info">{{ data.article.issue }}</span></small></li>
+        <li class="list-group-item cursor-pointer"><small>Pages: <span class="text-info">{{ data.article.pages }}</span></small></li>
+
+    </a>
+</ul>
+
+<div class="modal fade" id="articleModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-black-50" id="exampleModalLabel">Edit Article Description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="book" ic-put-to="{{ webInfo.baseurl }}manager/bibliography/{{ data.id }}/article" ic-target="#description_wrapper">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Journal</span>
+                        </div>
+                        <input type="text"  id="journal_name" class="form-control" name="journal_name" value="{{ data.article.journal_name }}">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Volume</span>
+                        </div>
+                        <input type="text"  id="volume" class="form-control" name="volume" value="{{ data.article.volume }}">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Issue</span>
+                        </div>
+                        <input type="text"  id="issue" class="form-control" name="issue" value="{{ data.article.issue }}">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Pages</span>
+                        </div>
+                        <input type="text"  id="pages" class="form-control" name="pages" value="{{ data.article.pages }}">
+                    </div>
+
+                </form>
+                <script>
+                    $("#description_wrapper").ready(function(){
+                        /*
+                        We need the function for removing the bs4-backdrop from modal
+                         */
+                        $(".modal-backdrop").remove();
+                    })
+                </script>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="book" class="btn btn-success">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>

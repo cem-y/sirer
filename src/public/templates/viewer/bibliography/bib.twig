@@ -1,0 +1,35 @@
+{% if webInfo.header == true %}{% include 'viewer/head.twig' %}
+<body>
+{%  include 'viewer/topnav.twig' %}{% endif %}
+
+
+
+
+<div id="content_wrapper" ic-history-elt="true" class="container-fluid mt-1 mb-3">
+<div class="row">
+    <div class="col-sm-3 mt-5">
+        {% include 'viewer/bibliography/bib.facets.twig' %}
+    </div>
+    <div class="col-sm-9 mt-3 mb-5">
+        <div class="container-fluid">
+            <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link text-white active" id="date-tab" data-toggle="tab" href="#date" role="tab" aria-controls="date" aria-selected="true">BY DATE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" id="title-tab" data-toggle="tab" href="#title" role="tab" aria-controls="title" aria-selected="false">BY TITLE</a>
+                </li>
+            </ul>
+            <div id="bibResults">
+                {% include 'viewer/bibliography/bib.results.twig' %}
+            </div>
+
+            </div>
+    </div>
+
+
+</div>
+</div>
+
+{% if webInfo.header == true %}{%  include 'viewer/footer.twig' %}{% endif %}
+</body>

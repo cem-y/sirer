@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-bright fixed-top justify-content-lg-between fixed-top bg-dare-nav no-p-tb">
+
+    <ul class="navbar-nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link {% if webInfo.area == "bibliography" %}active{% endif %}" href="{{ webInfo.baseurl }}manager/bibliography"><i class="fas fa-book-open"></i> Bibliography</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if webInfo.area == "persons" %}active{% endif %}" href="{{ webInfo.baseurl }}manager/persons"><i class="fas fa-user-edit"></i> Persons</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if webInfo.area == "categories" %}active{% endif %}" href="{{ webInfo.baseurl }}manager/categories"><i class="fas fa-balance-scale"></i> Categories</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav nav-pills">
+        <li class="nav-item">
+            <form action="{{ webInfo.baseurl }}logout" method="post">
+                <span class="text-white mr-2">Hello <a  class="text-info" href="{{ webInfo.baseurl }}user/myprofile"><strong>{% if webInfo.user.firstname %}{{ webInfo.user.firstname }}{% else %}{{ webInfo.user.username }}{% endif %}</strong></a></span><button class="btn btn-danger">Logout</button>
+            </form>
+        </li>
+    </ul>
+</nav>
