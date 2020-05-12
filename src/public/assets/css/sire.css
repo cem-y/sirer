@@ -46,6 +46,10 @@ a:hover {
     overflow: auto;
 }
 
+.sire-opacity {
+    opacity: 0.5;
+}
+
 .card {
     border-radius: unset;
 }
