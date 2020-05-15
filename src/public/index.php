@@ -70,25 +70,15 @@ $capsule->addConnection($container['settings']['db']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
+
 /**
- * VIEWER
+ * PRESENTATION ROUTES
  */
 
-// Work Viewer
-$app->get('/workviewer', '\DareOne\controllers\viewer\ViewerController:showWorkViewer');
-$app->get('/workviewer/changepage', '\DareOne\controllers\viewer\ViewerController:changePage');
+
+$app->get('/', '\DareOne\controllers\manager\ManagerController:showManager')->add(Authenticator::class . ':authenticate');
 
 
-// Search
-
-
-
-
-
-$app->get('/bib', '\DareOne\controllers\viewer\BibController:showBibliography');
-$app->post('/bib', '\DareOne\controllers\viewer\BibController:showBibliography');
-$app->get('/bib/db/json', '\DareOne\controllers\ApiController:getBibEntries');
-$app->get('/bib/index/json', '\DareOne\controllers\ApiController:getBibIndex');
 
 
 /**

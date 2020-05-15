@@ -1,5 +1,6 @@
 <?php
 namespace DareOne\controllers\manager;
+use DareOne\auth\UserManager;
 use DareOne\controllers\BaseController;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -19,6 +20,8 @@ class ManagerController extends BaseController {
     function showManager(Request $request, Response $response) {
         $webInfo["baseurl"]= $this->baseUrl;
         $webInfo["area"]="";
+        $webInfo["user"]=UserManager::getUserInfoById($_SESSION["userid"]);
+
 
         $this->view->render($response, 'manager/start.twig', ["webInfo" => $webInfo]);
     }

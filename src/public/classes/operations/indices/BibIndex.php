@@ -1,7 +1,6 @@
 <?php
 namespace DareOne\operations\indices;
 use DareOne\models\bib\BibEntry;
-use DareOne\operations\EloquentOperations as EO;
 use DareOne\system\DareLogger;
 use Elasticsearch\ClientBuilder as CB;
 use Elasticsearch\ClientBuilder;
