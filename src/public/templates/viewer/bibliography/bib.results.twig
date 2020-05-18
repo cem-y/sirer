@@ -4,7 +4,7 @@
                 {% for entry in data.results.byDate.hits.hits %}
                 <div class="card {% if loop.index is odd %}bg-dare-dark{% else %}bg-black{% endif %} text-white" data-toggle="collapse" href="#d_entry_{{ loop.index }}">
                     <div class="card-header">
-                        <i class="fas fa-caret-right text-dare"></i> {{ entry._source.title }}{% if entry._source.date %}, {{ entry._source.date }}{% endif %}<br>
+                        <i class="fas fa-caret-right text-dare"></i> {{ entry._source.entry_title }}{% if entry._source.date %}, {{ entry._source.date }}{% endif %}<br>
                         <small>{% if entry._source.authors is not empty %}
                             By:
                             {% for a in entry._source.authors  %}
@@ -17,7 +17,7 @@
                             <small>
                                 <p class="font-weight-bold">Bibliographic Description</p>
                                 <hr>
-                                {% if entry._source.title %}<p>Title: {{ entry._source.title }}</p>{% endif %}
+                                {% if entry._source.title %}<p>Title: {{ entry._source.entry_title }}</p>{% endif %}
                                 {% if entry._source.title_transcript %}<p>Transcription (Title): {{ entry._source.title_transcript }}</p>{% endif %}
                                 {% if entry._source.title_translation %}<p>Translation (Title): {{ entry._source.title_translation }}</p>{% endif %}
                                 {% if entry._source.abstract %}<p>Abstract: {{ entry._source.abstract }}</p>{% endif %}
@@ -83,7 +83,7 @@
                 {% for entry in data.results.byTitle.hits.hits %}
                 <div class="card {% if loop.index is odd %}bg-dare-dark{% else %}bg-black{% endif %} text-white" data-toggle="collapse" href="#t_entry_{{ loop.index }}">
                     <div class="card-header">
-                        <i class="fas fa-caret-right text-dare"></i> {{ entry._source.title }} {% if entry._source.date %}, {{ entry._source.date }}{% endif %}<br>
+                        <i class="fas fa-caret-right text-dare"></i> {{ entry._source.entry_title }} {% if entry._source.date %}, {{ entry._source.date }}{% endif %}<br>
                         <small>{% if entry._source.authors is not empty %}
                             By:
                             {% for a in entry._source.authors  %}

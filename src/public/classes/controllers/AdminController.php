@@ -2,11 +2,11 @@
 namespace DareOne\controllers;
 
 
+use DareOne\auth\UserManager;
+use DareOne\models\DbLog;
+use DareOne\models\user\User;
 use DareOne\operations\indices\BibIndex;
-use DareOne\operations\indices\FulltextSectionIndex;
-use DareOne\operations\indices\MsIndex;
-use DareOne\operations\indices\WorkIndex;
-use DareOne\operations\indices\FulltextIndex;
+
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -18,76 +18,112 @@ class AdminController extends BaseController {
      */
 
 
-    function prepareIndex(Request $request, Response $response){
-        $params=$request->getAttributes();
-        if ($params["index"] == "fulltexts"){
-            $index=new FulltextIndex();
-            $index->prepare();
-        } elseif ($params["index"] == "bib") {
-            $index=new BibIndex();
-            $index->prepare();
-        } elseif ($params["index"] == "manuscripts") {
-
-             $index=new MsIndex();
-             $index->prepare();
-
-
-        } elseif ($params["index"] == "works") {
-            $index=new WorkIndex();
-            $index->prepare();
-
+    /**
+     * @param Request $request
+     * @param Response $response
+     *
+     * GET-Request
+     */
+    function showOverview(Request $request, Response $response){
+        $webInfo["baseurl"]= $this->baseUrl;
+        $webInfo["area"]="start";
+        $webInfo["user"]=UserManager::getUserInfoById($_SESSION["userid"]);
+        //$data=BibManager::getAll();
+        $data=array();
+        if (isset($params["ic-request"])){
+            $webInfo["header"]=false;
+        } else {
+            $webInfo["header"]=true;
         }
-        error_log(print_r("Successfully prepared Index", true));
-        return $response->withRedirect('/', 301);
+        $this->view->render($response, 'admin/start.twig', ["webInfo" => $webInfo, "data" => $data]);
     }
 
-    function deleteIndex(Request $request, Response $response){
-        $params=$request->getAttributes();
-        $index = new ElasticIndex();
-        $index->delete($params["index"]);
-        return $response->withRedirect('/', 301);
-
+    /**
+     * @param Request $request
+     * @param Response $response
+     *
+     * GET-Request
+     */
+    function showUser(Request $request, Response $response){
+        $webInfo["baseurl"]= $this->baseUrl;
+        $webInfo["area"]="user";
+        $webInfo["user"]=UserManager::getUserInfoById($_SESSION["userid"]);
+        $data=User::all()->toArray();
+        for ($i=0; $i < count($data); $i++){
+            unset($data[$i]["password"]);
+        }
+        $this->view->render($response, 'admin/user.admin.twig', ["webInfo" => $webInfo, "data" => $data]);
     }
 
-    function indexBib(Request $request, Response $response){
-        $index=new BibIndex();
-        $index->indexAll();
-        return $response->withRedirect('/', 301);
+    /**
+     * @param Request $request
+     * @param Response $response
+     *
+     * POST-Request
+     */
+    function createUser(Request $request, Response $response){
+        $webInfo["baseurl"]= $this->baseUrl;
+        $webInfo["area"]="user";
+        $webInfo["user"]=UserManager::getUserInfoById($_SESSION["userid"]);
+
+        error_log(print_r($request->getParsedBody(), true));
+        UserManager::createUser($request);
+        $data=User::all()->toArray();
+        for ($i=0; $i < count($data); $i++){
+            unset($data[$i]["password"]);
+        }
+        $this->view->render($response, 'admin/list.user.admin.twig', ["webInfo" => $webInfo, "data" => $data]);
     }
 
-    function indexMs(Request $request, Response $response){
-        $index=new MsIndex();
-        $index->indexAll();
-        return $response->withRedirect('/', 301);
+    /**
+     * @param Request $request
+     * @param Response $response
+     *
+     * PUT-Request
+     */
+    function updateUser(Request $request, Response $response){
+        $webInfo["baseurl"]= $this->baseUrl;
+        $webInfo["area"]="user";
+        $webInfo["user"]=UserManager::getUserInfoById($_SESSION["userid"]);
+        UserManager::updateUser($request);
+        $data=User::all()->toArray();
+        for ($i=0; $i < count($data); $i++){
+            unset($data[$i]["password"]);
+        }
+        $this->view->render($response, 'admin/list.user.admin.twig', ["webInfo" => $webInfo, "data" => $data]);
     }
 
-    function indexWork(Request $request, Response $response){
-        $index=new WorkIndex();
-        $index->indexAll();
-        return $response->withRedirect('/', 301);
-
+    function showLogs(Request $request, Response $response){
+        $webInfo["baseurl"]= $this->baseUrl;
+        $webInfo["area"]="logs";
+        $webInfo["user"]=UserManager::getUserInfoById($_SESSION["userid"]);
+        $data=DbLog::orderBy("id", "desc")->get()->toArray();
+        $this->view->render($response, 'admin/logs.admin.twig', ["webInfo" => $webInfo, "data" => $data]);
     }
 
-    function indexFulltexts(Request $request, Response $response){
-        $index=new FulltextIndex();
-        $index->indexAll();
-        return ApiController::getFulltextIndex($request, $response);
-
+    function showTests(Request $request, Response $response){
+        $webInfo["baseurl"]= $this->baseUrl;
+        $webInfo["area"]="tests";
+        $webInfo["user"]=UserManager::getUserInfoById($_SESSION["userid"]);
+        $data=array();
+        $this->view->render($response, 'admin/tests.admin.twig', ["webInfo" => $webInfo, "data" => $data]);
     }
 
-
-    function indexFulltextSections(Request $request, Response $response){
-        $index=new FulltextSectionIndex;
-        $index->index();
-        return $response->withRedirect('/', 301);
+    function showIndices(Request $request, Response $response){
+        $webInfo["baseurl"]= $this->baseUrl;
+        $webInfo["area"]="indices";
+        $webInfo["user"]=UserManager::getUserInfoById($_SESSION["userid"]);
+        $data=array();
+        $this->view->render($response, 'admin/indices.admin.twig', ["webInfo" => $webInfo, "data" => $data]);
     }
 
-
-    function forceIndexFulltextSections(Request $request, Response $response){
-        $index=new FulltextSectionIndex;
-        $index->createIndex();
-        return $response->withRedirect('/', 301);
-
+    /**
+     * @param Request $request
+     * @param Response $response
+     */
+    function resetBibIndex(Request $request, Response $response){
+        BibIndex::prepare();
+        BibIndex::indexAll();
     }
 
 

@@ -57,11 +57,6 @@ class BibEntry extends BaseModel
         return $this->belongsToMany('DareOne\models\bib\BibCategory', "bib_entry_category", "bib_entry_id", "category_id");
     }
         // WE REALLY HAVE TO CHECK WHAT THE RELATIONS IS IN BIB_ENTRY_WORKS
-    public function works()
-
-    {
-        return $this->belongsToMany('DareOne\models\works\WorkAverroes', "bib_entry_work", "bib_entry", "work");
-    }
 
     public function roles()
     {

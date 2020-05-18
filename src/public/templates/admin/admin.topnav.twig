@@ -1,22 +1,25 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-bright fixed-top justify-content-lg-between fixed-top bg-dare-nav no-p-tb">
 
     <ul class="navbar-nav nav-pills">
+        {% if webInfo.user.role == 1 %}
         <li class="nav-item">
-            <a class="nav-link {% if webInfo.area == "bibliography" %}active{% endif %}" href="{{ webInfo.baseurl }}manager/bibliography"><i class="fas fa-book-open"></i> Bibliography</a>
+            <a class="nav-link {% if webInfo.area == "user" %}active{% endif %}" href="{{ webInfo.baseurl }}admin/user"><i class="fas fa-users-cog"></i> user</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if webInfo.area == "persons" %}active{% endif %}" href="{{ webInfo.baseurl }}manager/persons"><i class="fas fa-user-edit"></i> Persons</a>
+            <a class="nav-link {% if webInfo.area == "logs" %}active{% endif %}" href="{{ webInfo.baseurl }}admin/logs"><i class="far fa-clipboard"></i> logs</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if webInfo.area == "categories" %}active{% endif %}" href="{{ webInfo.baseurl }}manager/categories"><i class="fas fa-balance-scale"></i> Categories</a>
+            <a class="nav-link {% if webInfo.area == "tests" %}active{% endif %}" href="{{ webInfo.baseurl }}admin/tests"><i class="fas fa-tasks"></i> test</a>
         </li>
-    </ul>
-    <ul class="navbar-nav nav-pills">
-        {% if webInfo.user.role==1 %}
         <li class="nav-item">
-            <a class="nav-link " href="{{ webInfo.baseurl }}admin"><i class="fas fa-cogs"></i> dare.admin</a>
+            <a class="nav-link {% if webInfo.area == "indices" %}active{% endif %}" href="{{ webInfo.baseurl }}admin/indices"><i class="fas fa-list-ol"></i> indices</a>
         </li>
         {% endif %}
+    </ul>
+    <ul class="navbar-nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link " href="{{ webInfo.baseurl }}manager"><i class="fas fa-pen-square"></i></i> dare.manager</a>
+        </li>
         <li class="nav-item pt-2 ml-1">
             <span class="text-white mr-2 mt-2" >Hello <a  class="text-info" href="{{ webInfo.baseurl }}user/myprofile"><strong>{% if webInfo.user.firstname %}{{ webInfo.user.firstname }}{% else %}{{ webInfo.user.username }}{% endif %}</strong></a></span>
         </li>

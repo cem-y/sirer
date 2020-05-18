@@ -1,0 +1,29 @@
+{% include 'manager/mgr.head.twig' %}
+<body style="background-image: url('{{ webInfo.baseurl }}assets/img/dare_background.jpg'); background-size: cover; background-attachment: fixed; font-family: 'Source Sans Pro';">
+{%  include 'admin/admin.topnav.twig' %}
+
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-center">
+        <div class="col-sm-11 ml-5 mt-5 ">
+            <div class="card">
+                <div class="card-header">
+                    dare.indices (future)
+                </div>
+                <div class="card-body" id="result_wrapper">
+                    {% if webInfo.user.role == 1 %}
+                        <span>Indices coming...</span>
+                        <button ic-put-to="{{ webInfo.baseurl }}admin/indices/bib">Re-Index Bibliography</button>
+                    {% else %}
+                        <span class="text-danger font-italic">you have no permission</span>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{%  include 'viewer/footer.twig' %}
+</body>

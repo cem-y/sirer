@@ -39,13 +39,13 @@ class BibTools
     public static function indexStatusById($id){
         $index=BibIndex::getDocument($id);
         if ($index!=false){
-        $db=BibEntry::with("persons", "categories", "types", "works", "book", "booksection", "article")
+        $db=BibEntry::with("persons", "categories", "types", "book", "booksection", "article")
             ->where('id','=', $id)
             ->first()
             ->toArray();
         $indexStatus=array();
         $indexStatus["all"]=1;
-        if ($index["title"]==$db["title"]){
+        if ($index["entry_title"]==$db["title"]){
             $indexStatus["title"]["status"]=1;
             $indexStatus["title"]["msg"]="OK";
         } else {

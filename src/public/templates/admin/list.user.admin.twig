@@ -1,0 +1,131 @@
+<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newUser">
+    New User
+</button>
+<script>
+    $("#result_wrapper").ready(function(){
+        /*
+        We need the function for removing the bs4-backdrop from modal
+        */
+        $(".modal-backdrop").remove();
+    })
+</script>
+
+<div class="modal" id="newUser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">New User</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="addUser" method="post" ic-post-to="{{ webInfo.baseurl }}admin/user" ic-target="#result_wrapper">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">User Name</span>
+                        </div>
+                        <input id="username" type="text" class="form-control" name="username" placeholder="enter user name..." required>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">First Name</span>
+                        </div>
+                        <input id="firstname" type="text" class="form-control" name="firstname" placeholder="enter first name..." >
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Last Name</span>
+                        </div>
+                        <input id="lastname" type="text" class="form-control" name="lastname" >
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">New Password</span>
+                        </div>
+                        <input id="password1" type="password" class="form-control pwd" name="password1" required>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Confirm Password</span>
+                        </div>
+                        <input id="password2" type="password" class="form-control pwd" name="password2" required>
+                    </div>
+                    <script>
+                        $('.pwd').on('input', function () {
+                            if ($('#password1').val()!==$('#password2').val()){
+                                $('#submitter').attr("disabled", "disabled");
+                            } else {
+                                $('#submitter').removeAttr("disabled");
+                            }
+                        })
+
+                    </script>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button id="submitter" type="submit" form="addUser" class="btn btn-primary">Add User</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<table class="table table-striped bg-white" style="max-width: 80vw; opacity: 0.9">
+    <thead>
+        <th>id</th>
+        <th>username</th>
+        <th>firstname</th>
+        <th>lastname</th>
+        <th>role</th>
+        <th>new pwd</th>
+        <th>verifiy pwd</th>
+    <th></th>
+    </thead>
+    <tbody>
+        {% for user in data %}
+            <form method="post"  ic-put-to="{{ webInfo.baseurl }}admin/user/{{ user.id }}" ic-target="#result_wrapper">
+                <input type="hidden" name="_METHOD" value="PUT"/>
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td><input type="text" class="form-control form-control-sm" placeholder="first name..." id="firstname" name="firstname"value="{{ user.firstname }}"></td>
+                <td><input type="text" class="form-control form-control-sm" placeholder="last name..." id="lastname" name="lastname" value="{{ user.lastname }}"></td>
+                <td><select id="role" name="role" class="custom-select custom-select-sm">
+                        {% if user.role == 1 %}
+                            <option value="0">editor</option>
+                            <option value="1" selected>admin</option>
+                        {% else %}
+                            <option value="0" selected>editor</option>
+                            <option value="1">admin</option>
+                        {% endif %}
+                    </select></td>
+                <td>
+                    <input id="password1{{ loop.index }}" type="password" class="form-control form-control-sm pwd{{ loop.index }}" name="password1">
+                </td>
+                <td>
+                    <input id="password2{{ loop.index }}" type="password" class="form-control form-control-sm pwd{{ loop.index }}" name="password2">
+                </td>
+                <td><button type="submit" id="submitter{{ loop.index }}" class="btn btn-sm btn-success">Save</button></td>
+            </tr>
+            </form>
+            <script>
+                $('.pwd{{ loop.index }}').on('input', function () {
+                    if ($('#password1{{ loop.index }}').val()!==$('#password2{{ loop.index }}').val()){
+                        //$('#wrongPassword').removeAttr("hidden");
+                        $('#submitter{{ loop.index }}').attr("disabled", "disabled");
+                    } else {
+                        //$('#wrongPassword').attr("hidden", "hidden");
+                        $('#submitter{{ loop.index }}').removeAttr("disabled");
+                    }
+                })
+
+            </script>
+        {% endfor %}
+
+    </tbody>
+</table>

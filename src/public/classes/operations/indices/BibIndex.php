@@ -1,9 +1,9 @@
 <?php
 namespace DareOne\operations\indices;
 use DareOne\models\bib\BibEntry;
+
 use DareOne\system\DareLogger;
 use Elasticsearch\ClientBuilder as CB;
-use Elasticsearch\ClientBuilder;
 
 
 class BibIndex
@@ -14,19 +14,20 @@ class BibIndex
 
     public static function prepare()
     {
-        $params = ['index' => "bib"];
+        $params = ['index' => "sire"];
         $client = CB::create()->build();
         if ($client->indices()->exists($params)) {
             $client->indices()->delete($params);
         };
         $client->indices()->create(BibIndex::configure());
+        return;
     }
 
 
     private static function configure()
     {
         $analyzer = [
-            'index' => 'bib',
+            'index' => 'sire',
             'body' => [
                 'settings' => [
                     'number_of_shards' => 1,
@@ -47,171 +48,169 @@ class BibIndex
     private static function map()
     {
 
-            $mapping = [
-                'properties' => [
-                    'free_text' => [
-                        'type' => 'text',
-                        "analyzer" => "dare_analyzer"
-                    ],
-                    'title' => [
-                        'type' => 'keyword',
-                    ],
-                    'btype' => [
-                        'type' => 'integer',
-                    ],
-                    'volume' => [
-                        'type' => 'text',
-                    ],
-                    'author_id' => [
-                        'type' => 'integer',
-                    ],
-                    'author_name' => [
-                        'type' => 'keyword',
-                    ],
-                    'author_free_name' => [
-                        'type' => 'text',
-                    ],
-                    'date' => [
-                        'type' => 'integer',
-                    ],
-                    'categories' => [
-                        'type' => 'nested',
-                        'properties' => [
-                            "category_name" => [
-                                "type" => "keyword"
-                            ],
-                            "id" => [
-                                "type" => "integer"
-                            ]
+        $mapping = [
+            'properties' => [
+                'free_text' => [
+                    'type' => 'text',
+                    "analyzer" => "dare_analyzer"
+                ],
+                'entry_title' => [
+                    'type' => 'keyword',
+                ],
+                'btype' => [
+                    'type' => 'integer',
+                ],
+                'volume' => [
+                    'type' => 'text',
+                ],
+                'author_id' => [
+                    'type' => 'integer',
+                ],
+                'author_name' => [
+                    'type' => 'keyword',
+                ],
+                'author_free_name' => [
+                    'type' => 'text',
+                ],
+                'date' => [
+                    'type' => 'integer',
+                ],
+                'categories' => [
+                    'type' => 'nested',
+                    'properties' => [
+                        "category_name" => [
+                            "type" => "keyword"
+                        ],
+                        "id" => [
+                            "type" => "integer"
                         ]
-                    ],
-                    'authors' => [
-                        'type' => 'nested',
-                        'properties' => [
-                            "full_name" => [
-                                "type" => "keyword"
-                            ],
-                            "id" => [
-                                "type" => "integer"
-                            ]
-                        ]
-                    ],
-                    'works' => [
-                        'type' => 'nested',
-                        'properties' => [
-                            "aw_title" => [
-                                "type" => "keyword"
-                            ],
-                            "id" => [
-                                "type" => "integer"
-                            ]
-                        ]
-                    ],
-                    'abstract' => [
-                        'type' => 'text',
-                    ],
-                    'bib_type' => [
-                        'type' => 'keyword',
-                    ],
-                    'edited_title' => [
-                        'type' => 'text',
-                    ],
-                    'pub_place' => [
-                        'type' => 'text',
-                    ],
-                    'publisher' => [
-                        'type' => 'text',
-                    ],
-                    'series' => [
-                        'type' => 'text',
-                    ],
-                    'series_volume' => [
-                        'type' => 'text',
-                    ],
-                    'journal_name' => [
-                        'type' => 'text',
-                    ],
-                    'journal_volume' => [
-                        'type' => 'text',
-                    ],
-                    'journal_issue' => [
-                        'type' => 'text',
-                    ],
-                    'pages' => [
-                        'type' => 'text',
-                    ],
-                    "is_catalog" => [
-                        "type" => "boolean"
                     ]
+                ],
+                'authors' => [
+                    'type' => 'nested',
+                    'properties' => [
+                        "full_name" => [
+                            "type" => "keyword"
+                        ],
+                        "id" => [
+                            "type" => "integer"
+                        ]
+                    ]
+                ],
+                'works' => [
+                    'type' => 'nested',
+                    'properties' => [
+                        "aw_title" => [
+                            "type" => "keyword"
+                        ],
+                        "id" => [
+                            "type" => "integer"
+                        ]
+                    ]
+                ],
+                'abstract' => [
+                    'type' => 'text',
+                ],
+                'bib_type' => [
+                    'type' => 'keyword',
+                ],
+                'edited_title' => [
+                    'type' => 'text',
+                ],
+                'pub_place' => [
+                    'type' => 'text',
+                ],
+                'publisher' => [
+                    'type' => 'text',
+                ],
+                'series' => [
+                    'type' => 'text',
+                ],
+                'series_volume' => [
+                    'type' => 'text',
+                ],
+                'journal_name' => [
+                    'type' => 'text',
+                ],
+                'journal_volume' => [
+                    'type' => 'text',
+                ],
+                'journal_issue' => [
+                    'type' => 'text',
+                ],
+                'pages' => [
+                    'type' => 'text',
+                ],
+                "is_catalog" => [
+                    "type" => "boolean"
                 ]
-            ];
+            ]
+        ];
         return $mapping;
     }
 
     public static function indexAll()
     {
+        error_log("INDEXALL");
         $client = CB::create()->build();
-        $bibEntries = BibEntry::with("persons", "categories", "types", "works", "book", "article", "booksection")->get();
+        $bibEntries = BibEntry::with("persons", "categories", "types", "book", "article", "booksection")->get();
         $i=1;
 
         foreach ($bibEntries as $bibEntry) {
-            $categories=array();
+            if ($bibEntry["is_inactive"]!=1)
+            {
+                $categories=array();
 
-            foreach ($bibEntry["categories"] as $c){
-                $category["id"]=$c["id"];
-                $category["category_name"]=$c["category_name"];
-                array_push($categories, $category);
-            }
-
-            $authors=array();
-            $authorsFree=array();
-            foreach ($bibEntry["persons"] as $p) {
-                if (($p["role"]==1 or $p["role"]==2) and $p["norm_person"]!=null){
-                    $author["id"]=$p["norm_person"]["id"];
-                    $author["full_name"]=$p["norm_person"]["full_name"];
-                    $author["role"]=$p["role"];
-                    array_push($authors, $author);
-                    array_push($authorsFree, $p["norm_person"]["full_name"]);
+                foreach ($bibEntry["categories"] as $c){
+                    $category["id"]=$c["id"];
+                    $category["category_name"]=$c["category_name"];
+                    array_push($categories, $category);
                 }
-            }
+                $authors=array();
+                $authorsFree=array();
+                foreach ($bibEntry["persons"] as $p) {
 
-            $works=array();
-            foreach ($bibEntry["works"] as $w) {
-                $work["id"]=$w["id"];
-                $work["aw_title"]=$w["aw_title"];
-                array_push($works, $work);
-            }
+                    if (($p["role"]==1 or $p["role"]==2) and $p["norm_person"]!=null){
+                        $author["id"]=$p["norm_person"]["id"];
+                        $author["full_name"]=$p["norm_person"]["full_name"];
+                        $author["role"]=$p["role"];
+                        array_push($authors, $author);
+                        array_push($authorsFree, $p["norm_person"]["full_name"]);
+                    }
+                }
 
 
-
-            $params = [
-                'index' => 'bib',
-                'id'=>$bibEntry["id"],
-                'body' => [
+                $title_finder["title"]=$bibEntry["title"];
+                $params = [
+                    'index' => 'sire',
                     'id'=>$bibEntry["id"],
-                    'authors_free'=> $authorsFree,
-                    'title'=>$bibEntry["title"],
-                    'btype' => $bibEntry["type"],
-                    'date' => $bibEntry["date"],
-                    'categories' =>$categories,
-                    'authors' =>$authors,
-                    'works' => $works,
-                    'book' => $bibEntry["book"],
-                    'booksection' => $bibEntry["booksection"],
-                    'article' => $bibEntry["article"]
-                ]
-            ];
+                    'body' => [
+                        'id'=>$bibEntry["id"],
+                        'authors_free'=> $authorsFree,
+                        'entry_title'=>$bibEntry["title"],
+                        'main_title'=>$title_finder,
+                        'btype' => $bibEntry["type"],
+                        'date' => $bibEntry["date"],
+                        'categories' =>$categories,
+                        'authors' =>$authors,
+                        'book' => $bibEntry["book"],
+                        'booksection' => $bibEntry["booksection"],
+                        'article' => $bibEntry["article"]
+                    ]
+                ];
 
-            $client->index($params);
-            error_log(print_r("(Bibliographic Entry: ".$i." / ".count($bibEntries).") indexed", TRUE));
-            $i++;
+                $client->index($params);
+                error_log(print_r("(Bibliographic Entry: ".$i." / ".count($bibEntries).") indexed", TRUE));
+                $i++;
+            }
+
         }
     }
 
     public static function getIndex()
     {
         $client = CB::create()->build();
-        $params["index"] = "bib";
+        $params["index"] = "sire";
         $params["body"] = [
             "size"=>5000,
             "query"=> ["match_all"=>new \stdClass]
@@ -224,7 +223,7 @@ class BibIndex
     public static function getIndexWithAggs($selected=array(), $from = 0, $size =10, $sort)
     {
         $client = CB::create()->build();
-        $params["index"] = "bib";
+        $params["index"] = "sire";
         $params["body"] = [
             "from" => $from,
             "size"=>$size,
@@ -250,7 +249,7 @@ class BibIndex
                         "term" => [
                             "btype" => $t
                         ]
-                            ];
+                    ];
                     array_push($must, $param);
                 }
             }
@@ -266,27 +265,27 @@ class BibIndex
                         "bool" => [
                             "should" => [
                                 [
-                                "multi_match" => [
-                                    "query" => $t,
-                                    "type" => "phrase_prefix",
+                                    "multi_match" => [
+                                        "query" => $t,
+                                        "type" => "phrase_prefix"
                                     ]
                                 ],
                                 [
-                                "nested" =>  [
-                                    "path" => "authors",
-                                    "query" => [
-                                        "match" => [
-                                            "authors.full_name" => [
-                                                "query" => $t
-                                                            ]
-                                                        ]
+                                    "nested" =>  [
+                                        "path" => "authors",
+                                        "query" => [
+                                            "match" => [
+                                                "authors.full_name" => [
+                                                    "query" => $t
                                                 ]
                                             ]
-
                                         ]
                                     ]
+
                                 ]
-                             ];
+                            ]
+                        ]
+                    ];
 
                     array_push($must, $param);
                 }
@@ -311,26 +310,7 @@ class BibIndex
                     array_push($must, $param);
                 }
             }
-            // WORKS
-            if (isset($selected["works"])) {
-                foreach ($selected["works"] as $c){
-                    $param=[
-                        "nested" =>  [
-                            "path" => "works",
-                            "query" => [
-                                "bool" => [
-                                    "must" => [
-                                        "term" => [
-                                            "works.aw_title" => $c
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ];
-                    array_push($must, $param);
-                }
-            }
+
             // AUTHORS
             if (isset($selected["authors"])) {
                 foreach ($selected["authors"] as $c){
@@ -383,12 +363,12 @@ class BibIndex
                         $range["gte"]=2001;
                     }
                     $param=[
-                            "range" => [
-                                "date" => [
-                                        $range
-                                    ]
+                        "range" => [
+                            "date" => [
+                                $range
                             ]
-                        ];
+                        ]
+                    ];
                     array_push($must, $param);
                 }
             }
@@ -478,11 +458,11 @@ class BibIndex
 
     public static function getDocument($id){
 
-        $client=ClientBuilder::create()->build();
+        $client=CB::create()->build();
 
         if(self::existsDocument($id)){
             $params=[
-                'index'=>"bib",
+                'index'=>"sire",
                 'id'=>$id
             ];
             return $client->getSource($params);
@@ -493,9 +473,9 @@ class BibIndex
 
 
     public static function existsDocument($id){
-        $client=ClientBuilder::create()->build();
+        $client=CB::create()->build();
         $params=[
-            'index'=>"bib",
+            'index'=>"sire",
             'body'=>['size' => 1,
                 "query" =>
                     ["match"=>
@@ -512,9 +492,9 @@ class BibIndex
 
     public static function deleteDocument($id){
         if(self::existsDocument($id)) {
-            $client = ClientBuilder::create()->build();
+            $client = CB::create()->build();
             $params = [
-                'index' => "bib",
+                'index' => "sire",
                 'id' => $id
             ];
             $client->delete($params);
@@ -523,10 +503,13 @@ class BibIndex
     }
 
     public static function indexDocument($id){
-        $client=ClientBuilder::create()->build();
+        $client=CB::create()->build();
         $bibEntry=BibEntry::where("id", "=", $id)
-            ->with("persons", "categories", "types", "works", "book", "article", "booksection")
-            ->first();
+            ->with("persons", "categories", "types", "book", "article", "booksection")
+            ->first()->toArray();
+
+
+        error_log(print_r($bibEntry, true));
         $categories=array();
         foreach ($bibEntry["categories"] as $c){
             $category["id"]=$c["id"];
@@ -544,24 +527,20 @@ class BibIndex
                 array_push($authorsFree, $p["norm_person"]["full_name"]);
             }
         }
-        $works=array();
-        foreach ($bibEntry["works"] as $w) {
-            $work["id"]=$w["id"];
-            $work["aw_title"]=$w["aw_title"];
-            array_push($works, $work);
-        }
+
+        $title_finder["title"]=$bibEntry["title"];
         $params = [
-            'index' => 'bib',
+            'index' => 'sire',
             'id'=>$bibEntry["id"],
             'body' => [
                 'id'=>$bibEntry["id"],
                 'authors_free'=> $authorsFree,
-                'title'=>$bibEntry["title"],
+                'entry_title'=>$bibEntry["title"],
+                'main_title'=>$title_finder,
                 'btype' => $bibEntry["type"],
                 'date' => $bibEntry["date"],
                 'categories' =>$categories,
                 'authors' =>$authors,
-                'works' => $works,
                 'book' => $bibEntry["book"],
                 'booksection' => $bibEntry["booksection"],
                 'article' => $bibEntry["article"]

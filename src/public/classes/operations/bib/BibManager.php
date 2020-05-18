@@ -66,7 +66,7 @@ class BibManager
             $data["all_bib"]=BibEntry::orderBy("title", "asc")->get()->toArray();
         }
         if ($data["is_inactive"]!=1){
-            //$data["index_status"]=BibTools::indexStatusById($id);
+            $data["index_status"]=BibTools::indexStatusById($id);
         }
         return $data;
     }

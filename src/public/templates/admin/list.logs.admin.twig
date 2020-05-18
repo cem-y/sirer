@@ -1,0 +1,30 @@
+<table class="table table-striped bg-white" style="max-width: 80vw; opacity: 0.9">
+    <thead>
+        <th>id</th>
+        <th>mode</th>
+        <th>db_table</th>
+        <th>entry_id</th>
+        <th>column</th>
+        <th>value.new</th>
+        <th>value.old</th>
+        <th>user.id</th>
+        <th>time</th>
+    <th></th>
+    </thead>
+    <tbody>
+        {% for log in data %}
+            <tr>
+                <td>{{ log.id }}</td>
+                <td>{{ log.mode }}</td>
+                <td>{{ log.db_table }}</td>
+                <td>{{ log.entry_id }}</td>
+                <td>{{ log.column }}</td>
+                <td>{{ log.new_value }}</td>
+                <td>{{ log.old_value }}</td>
+                <td>{{ log.user_id }}</td>
+                <td>{{ log.created_at }}</td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+</table>

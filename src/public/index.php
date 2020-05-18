@@ -76,7 +76,7 @@ $capsule->bootEloquent();
  */
 
 
-$app->get('/', '\DareOne\controllers\manager\ManagerController:showManager')->add(Authenticator::class . ':authenticate');
+$app->get('/', '\DareOne\controllers\viewer\BibController:showBibliography');
 
 
 
@@ -151,6 +151,18 @@ $app->post('/admin/createUser', '\DareOne\controllers\AuthController:createUser'
 $app->group('/user', function() use ($app){
     $app->get('/myprofile', '\DareOne\controllers\UserController:showProfile');
     $app->put('/myprofile', '\DareOne\controllers\UserController:updateProfile');
+})->add(Authenticator::class . ':authenticate');
+
+$app->group('/admin', function() use ($app){
+    $app->get('', '\DareOne\controllers\AdminController:showOverview');
+    $app->get('/user', '\DareOne\controllers\AdminController:showUser');
+    $app->post('/user', '\DareOne\controllers\AdminController:createUser');
+    $app->put('/user/{id}', '\DareOne\controllers\AdminController:updateUser');
+    $app->get('/logs', '\DareOne\controllers\AdminController:showLogs');
+    $app->get('/tests', '\DareOne\controllers\AdminController:showTests');
+    $app->get('/indices', '\DareOne\controllers\AdminController:showIndices');
+    $app->put('/indices/bib', '\DareOne\controllers\AdminController:resetBibIndex');
+
 })->add(Authenticator::class . ':authenticate');
 
 $app->run();

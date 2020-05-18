@@ -39,7 +39,7 @@ class BibList
      */
     private static function createCurrentBaseUrl ($selected)
     {
-        $baseURL="bib?";
+        $baseURL="?";
         if (isset($selected["types"])){
             foreach ($selected["types"] as $t) {
                 $baseURL=$baseURL."&types[]=".$t;
@@ -180,7 +180,7 @@ class BibList
 
         $results["byDate"]=BibIndex::getIndexWithAggs($selected, $from, $size, $sort);
 
-        $sort["term"]="title";
+        $sort["term"]="entry_title";
         $sort["order"]="asc";
         $results["byTitle"]=BibIndex::getIndexWithAggs($selected, $from, $size, $sort);
         return $results;
@@ -226,7 +226,7 @@ class BibList
                     array_push($facets["types"], array('id'=>$type["key"],
                             'selected'=>1,
                             'group'=>"types",
-                            'url'=>Tools::urlBuilder($type["key"],'types', $selected, "bib"),
+                            'url'=>Tools::urlBuilder($type["key"],'types', $selected, ""),
                             'count'=>$type["doc_count"]
                         )
                     );
@@ -235,7 +235,7 @@ class BibList
                     array_push($facets["types"], array('id'=>$type["key"],
                             'selected'=>0,
                             'group'=>"types",
-                            'url'=>Tools::urlBuilder($type["key"],'types', $selected, "bib"),
+                            'url'=>Tools::urlBuilder($type["key"],'types', $selected, ""),
                             'count'=>$type["doc_count"]
                         )
                     );
@@ -248,7 +248,7 @@ class BibList
                 array_push($facets["types"], array('id'=>$type["key"],
                     'selected'=>0,
                     'group'=>"types",
-                    'url'=>Tools::urlBuilder($type["key"],'types', $selected, "bib"),
+                    'url'=>Tools::urlBuilder($type["key"],'types', $selected, ""),
                     'count'=>$type["doc_count"]
                     )
                 );
@@ -262,7 +262,7 @@ class BibList
                     array_push($facets["categories"], array('id'=>$c["key"],
                             'selected'=>1,
                             'group'=>"categories",
-                            'url'=>Tools::urlBuilder($c["key"],'categories', $selected, "bib"),
+                            'url'=>Tools::urlBuilder($c["key"],'categories', $selected, ""),
                             'count'=>$c["doc_count"]
                         )
                     );
@@ -271,7 +271,7 @@ class BibList
                     array_push($facets["categories"], array('id'=>$c["key"],
                             'selected'=>0,
                             'group'=>"categories",
-                            'url'=>Tools::urlBuilder($c["key"],'categories', $selected, "bib"),
+                            'url'=>Tools::urlBuilder($c["key"],'categories', $selected, ""),
                             'count'=>$c["doc_count"]
                         )
                     );
@@ -284,48 +284,13 @@ class BibList
                 array_push($facets["categories"], array('id'=>$c["key"],
                         'selected'=>0,
                         'group'=>"categories",
-                        'url'=>Tools::urlBuilder($c["key"],'categories', $selected, "bib"),
+                        'url'=>Tools::urlBuilder($c["key"],'categories', $selected, ""),
                         'count'=>$c["doc_count"]
                     )
                 );
             }
         }
-        // BUILD WORKS FACETS
-        if ($selected["works"]!=null) {
-            $facets["works"]=[];
-            foreach ($aggs["works"]["works"]["buckets"] as $c) {
-                if (in_array($c["key"], $selected["works"])) {
-                    array_push($facets["works"], array('id'=>$c["key"],
-                            'selected'=>1,
-                            'group'=>"works",
-                            'url'=>Tools::urlBuilder($c["key"],'works', $selected, "bib"),
-                            'count'=>$c["doc_count"]
-                        )
-                    );
-                }
-                else {
-                    array_push($facets["works"], array('id'=>$c["key"],
-                            'selected'=>0,
-                            'group'=>"works",
-                            'url'=>Tools::urlBuilder($c["key"],'works', $selected, "bib"),
-                            'count'=>$c["doc_count"]
-                        )
-                    );
-                }
-            }
-        }
-        else {
-            $facets["works"]=[];
-            foreach ($aggs["works"]["works"]["buckets"] as $c) {
-                array_push($facets["works"], array('id'=>$c["key"],
-                        'selected'=>0,
-                        'group'=>"works",
-                        'url'=>Tools::urlBuilder($c["key"],'works', $selected, "bib"),
-                        'count'=>$c["doc_count"]
-                    )
-                );
-            }
-        }
+
         // BUILD AUTHORS
         if ($selected["authors"]!=null) {
             $facets["authors"]=[];
@@ -334,7 +299,7 @@ class BibList
                     array_push($facets["authors"], array('id'=>$c["key"],
                             'selected'=>1,
                             'group'=>"authors",
-                            'url'=>Tools::urlBuilder($c["key"],'authors', $selected, "bib"),
+                            'url'=>Tools::urlBuilder($c["key"],'authors', $selected, ""),
                             'count'=>$c["doc_count"]
                         )
                     );
@@ -343,7 +308,7 @@ class BibList
                     array_push($facets["authors"], array('id'=>$c["key"],
                             'selected'=>0,
                             'group'=>"authors",
-                            'url'=>Tools::urlBuilder($c["key"],'authors', $selected, "bib"),
+                            'url'=>Tools::urlBuilder($c["key"],'authors', $selected, ""),
                             'count'=>$c["doc_count"]
                         )
                     );
@@ -356,7 +321,7 @@ class BibList
                 array_push($facets["authors"], array('id'=>$c["key"],
                         'selected'=>0,
                         'group'=>"authors",
-                        'url'=>Tools::urlBuilder($c["key"],'authors', $selected, "bib"),
+                        'url'=>Tools::urlBuilder($c["key"],'authors', $selected, ""),
                         'count'=>$c["doc_count"]
                     )
                 );
@@ -370,7 +335,7 @@ class BibList
                     array_push($facets["dates"], array('id'=>$c["key"],
                             'selected'=>1,
                             'group'=>"dates",
-                            'url'=>Tools::urlBuilder($c["key"],'dates', $selected, "bib"),
+                            'url'=>Tools::urlBuilder($c["key"],'dates', $selected, ""),
                             'count'=>$c["doc_count"]
                         )
                     );
@@ -379,7 +344,7 @@ class BibList
                     array_push($facets["dates"], array('id'=>$c["key"],
                             'selected'=>0,
                             'group'=>"dates",
-                            'url'=>Tools::urlBuilder($c["key"],'dates', $selected, "bib"),
+                            'url'=>Tools::urlBuilder($c["key"],'dates', $selected, ""),
                             'count'=>$c["doc_count"]
                         )
                     );
@@ -392,7 +357,7 @@ class BibList
                 array_push($facets["dates"], array('id'=>$c["key"],
                         'selected'=>0,
                         'group'=>"dates",
-                        'url'=>Tools::urlBuilder($c["key"],'dates', $selected, "bib"),
+                        'url'=>Tools::urlBuilder($c["key"],'dates', $selected, ""),
                         'count'=>$c["doc_count"]
                     )
                 );

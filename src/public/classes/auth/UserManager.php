@@ -21,6 +21,7 @@
 namespace DareOne\auth;
 
 use DareOne\models\user\User;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
 
@@ -33,7 +34,34 @@ class UserManager
         $userInfo["username"]=$user->username;
         $userInfo["firstname"]=$user->firstname;
         $userInfo["lastname"]=$user->lastname;
+        $userInfo["role"]=$user->role;
         return $userInfo;
+    }
+
+    public static function updateUser(Request $request)
+    {
+        //DareLogger::logDbUpdate($request, "ap_users", "DareOne\models\bib\BibCategory");
+        $params=$request->getParsedBody();
+        $user=User::find($request->getAttributes()["id"]);
+        $user->firstname=$params["firstname"];
+        $user->lastname=$params["lastname"];
+        $user->role=$params["role"];
+        if ($params["password1"]!=null){
+            $user->password=password_hash($params["password1"], PASSWORD_BCRYPT);
+        }
+        $user->save();
+    }
+
+    public static function createUser(Request $request){
+        $params=$request->getParsedBody();
+        $user=new User();
+        $user->username=$params["username"];
+        $user->firstname=$params["firstname"];
+        $user->lastname=$params["lastname"];
+        if ($params["password1"]!=null){
+            $user->password=password_hash($params["password1"], PASSWORD_BCRYPT);
+        }
+        $user->save();
     }
 
 
