@@ -151,7 +151,7 @@ class BibIndex
 
     public static function indexAll()
     {
-        error_log("INDEXALL");
+
         $client = CB::create()->build();
         $bibEntries = BibEntry::with("persons", "categories", "types", "book", "article", "booksection")->get();
         $i=1;
