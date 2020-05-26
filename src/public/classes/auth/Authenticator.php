@@ -201,6 +201,7 @@ class Authenticator
                 $_SESSION['userid'] = $userId;
                 $logger->info('Generating token cookie');
                 $token = $this->generateRandomToken();
+                error_log("------------login");
                 UserToken::create([
                     "user_id" => $userId,
                     "user_agent" => $userAgent,

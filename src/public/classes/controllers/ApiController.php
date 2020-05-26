@@ -24,7 +24,7 @@ class ApiController extends BaseController {
      * @return mixed
      */
     function getBib(Request $request, Response $response){
-        $data=BibEntry::with("persons", "categories", "types", "works", "book", "booksection", "article")
+        $data=BibEntry::with("persons", "categories", "types", "book", "booksection", "article")
             ->get()
             ->toArray();
         return $response->withHeader('Content-type', 'application/json')->withJson($data);
@@ -36,7 +36,7 @@ class ApiController extends BaseController {
      * @return mixed
      */
     function getBibById(Request $request, Response $response){
-        $data=BibEntry::with("persons", "categories", "types", "works", "book", "booksection", "article")
+        $data=BibEntry::with("persons", "categories", "types", "book", "booksection", "article")
             ->where("id", "=", $request->getAttributes()["id"])
             ->first()
             ->toArray();

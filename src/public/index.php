@@ -144,7 +144,7 @@ $app->get('/login', '\DareOne\controllers\AuthController:getLogin');
 $app->post('/login', '\DareOne\controllers\AuthController:login');
 $app->post('/logout', Authenticator::class . ':logout');
 
-$app->post('/admin/createUser', '\DareOne\controllers\AuthController:createUser');
+//$app->post('/admin/createUser', '\DareOne\controllers\AuthController:createUser');
 /**
  * USER
  */

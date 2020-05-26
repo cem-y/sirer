@@ -170,7 +170,7 @@ class BibIndex
                 $authorsFree=array();
                 foreach ($bibEntry["persons"] as $p) {
 
-                    if (($p["role"]==1 or $p["role"]==2) and $p["norm_person"]!=null){
+                    if (($p["role"]["id"]==1 or $p["role"]["id"]==2) and $p["norm_person"]!=null){
                         $author["id"]=$p["norm_person"]["id"];
                         $author["full_name"]=$p["norm_person"]["full_name"];
                         $author["role"]=$p["role"];
@@ -507,8 +507,6 @@ class BibIndex
         $bibEntry=BibEntry::where("id", "=", $id)
             ->with("persons", "categories", "types", "book", "article", "booksection")
             ->first()->toArray();
-
-
         error_log(print_r($bibEntry, true));
         $categories=array();
         foreach ($bibEntry["categories"] as $c){
@@ -519,7 +517,7 @@ class BibIndex
         $authors=array();
         $authorsFree=array();
         foreach ($bibEntry["persons"] as $p) {
-            if (($p["role"]==1 or $p["role"]==2) and $p["norm_person"]!=null){
+            if (($p["role"]["id"]==1 or $p["role"]["id"]==2) and $p["norm_person"]!=null){
                 $author["id"]=$p["norm_person"]["id"];
                 $author["full_name"]=$p["norm_person"]["full_name"];
                 $author["role"]=$p["role"];
@@ -527,6 +525,7 @@ class BibIndex
                 array_push($authorsFree, $p["norm_person"]["full_name"]);
             }
         }
+        error_log(print_r($authors, true));
 
         $title_finder["title"]=$bibEntry["title"];
         $params = [

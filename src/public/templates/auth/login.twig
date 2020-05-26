@@ -1,22 +1,24 @@
 {% include 'auth/auth.head.twig' %}
 <body style="background-image: url('{{ webInfo.baseurl }}assets/img/dare_background.jpg'); background-size: cover; background-attachment: fixed; font-family: 'Source Sans Pro';">
 {%  include 'auth/auth.topnav.twig' %}
-
-
 <div class="container-fluid mt-5 d-flex justify-content-center">
     <div class="card  text-white bg-dark mt-5" style="min-width: 33vw">
         <div class="card-header bg-dare-card-header">
             <span class="badge badge bg-dare">Login to SIRE</span>
 
+            {% if try != 0 %}
+                <span class="badge badge bg-dare" color ="red">Invalid Username/Password please try again </span>
+            {% endif %}
         </div>
         <div class="card-body bg-dare-card-body" >
             <div id="login">
                 <form action="{{webInfo.baseurl}}login" id="login-form" method="post">
+                    <input type="hidden" name="try" value="{{try}}">
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
+                        <div class="input-group-prepend" aria-label="">
                             <span class="input-group-text">User</span>
                         </div>
-                        <input type="text" class="form-control" name="user" required>
+                        <input type="text" class="form-control" name="user" value="{{user}}" required>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
